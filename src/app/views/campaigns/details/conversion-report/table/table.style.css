@@ -1,0 +1,34 @@
+.cell-srno {
+    flex: 0 0 50px;
+}
+.cell-didPool {
+    flex: 0 0 180px;
+}
+
+.cell-did, 
+.cell-to {
+    flex: 0 0 110px;
+}
+
+.cell-did {
+    flex: 0 0 110px;
+}
+
+.cell-amount {
+    flex: 0 0 100px;
+}
+
+
+.cell-craftedMessage {
+    flex: 1;
+    min-width: 180px;
+}
+
+.cell-metric {
+    flex: 0 0 120px;
+    justify-content: center;
+}
+.cell-action {
+    flex: 0 0 60px;
+    justify-content: center;
+}

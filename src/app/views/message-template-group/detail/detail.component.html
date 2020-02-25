@@ -1,0 +1,158 @@
+<div class="detail-information-wrapper">
+    <mat-card>
+        <mat-card-title class="">
+            <div class="card-title-text">Message Template Group Details</div>
+            <mat-divider></mat-divider>
+        </mat-card-title>
+        <mat-card-content class="mt-1" *ngIf="isReady">
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label> Group Name</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="name"
+                            [value]="messageTemplateGroup.name"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Active</mat-label>
+                        <input
+                            matInput
+                            type="text" disabled style="display: none"/>
+                        <mat-slide-toggle
+                            [checked]="!messageTemplateGroup.isRemoved">
+                        </mat-slide-toggle>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label> Created By</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="createdBy"
+                            [value]="messageTemplateGroup.createdBy"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label> Created At</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="createdAt"
+                            [value]="messageTemplateGroup.createdAt | date:'y-MM-dd hh:mm a'"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label> Updated By</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="updatedBy"
+                            [value]="messageTemplateGroup.lastUpdateBy"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label> Updated At</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="updatedAt"
+                            [value]="messageTemplateGroup.lastUpdateAt | date:'y-MM-dd hh:mm a'"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="m-333 text-right">
+                <button mat-raised-button class="mr-05" color="accent" routerLink="../">{{"BACK" | translate }}</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-title class="">
+            <div class="card-title-text">Message Templates Preview</div>
+            <mat-divider></mat-divider>
+        </mat-card-title>
+        <mat-card-content class="mt-1">
+            <div fxLayout="row wrap" fxLayoutAlign="flex-end center" class="margin-333">
+                <mat-form-field class="search-input">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput type="text" name="searchSource" placeholder="Search here" [(ngModel)]="filter.search" #searchInput />
+                </mat-form-field>
+            </div>
+            <table  *ngIf="isReady" class="w-100" mat-table [dataSource]="messageTemplatePreviews" matSort (matSortChange)="sortData($event)">
+                <ng-container matColumnDef="srNo" sticky>
+                    <mat-header-cell class="cell-srno" *matHeaderCellDef
+                        >Sr #</mat-header-cell
+                    >
+                    <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+                        <a href="javascript:;">
+                            {{ offset + i + 1 }}
+                        </a>
+                    </mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef="messageTemplateName">
+                    <mat-header-cell class="cell-name" *matHeaderCellDef mat-sort-header
+                        >Name</mat-header-cell
+                    >
+                    <mat-cell class="cell-name" *matCellDef="let item">
+                        {{ item.messageTemplateName | excerpt: 80 }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="preview">
+                    <mat-header-cell class="cell-preview" *matHeaderCellDef mat-sort-header
+                        >Template Preview</mat-header-cell
+                    >
+                    <mat-cell class="cell-preview" *matCellDef="let item">
+                        {{ item.preview }}
+                    </mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell class="cell-actions" *matHeaderCellDef
+                        >Actions</mat-header-cell
+                    >
+                    <mat-cell class="cell-actions" *matCellDef="let item">
+                        <button mat-icon-button routerLink="/message_template/{{item.messageTemplateId}}"><mat-icon>details</mat-icon></button>
+                    </mat-cell>
+                </ng-container>
+                
+                <mat-header-row
+                    *matHeaderRowDef="columnHeaders; sticky: true"
+                ></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+            </table>
+            <mat-paginator
+                #paginator
+                [length]="meta.total"
+                [pageSize]="meta.per_page"
+                [pageIndex]="meta.current_page"
+                [pageSizeOptions]="[5, 10, 20]"
+                [showFirstLastButtons]="true"
+                (page)="onPaginateChange($event)"
+            >
+            </mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>

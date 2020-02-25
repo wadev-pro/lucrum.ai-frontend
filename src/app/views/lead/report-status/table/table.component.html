@@ -1,0 +1,91 @@
+<table class="w-100" mat-table *ngIf="reportStatuses" [dataSource]="reportStatuses" matSort (matSortChange)="sortData($event)">
+    <ng-container matColumnDef="srNo" sticky>
+        <mat-header-cell class="cell-srno" *matHeaderCellDef
+            >Sr #</mat-header-cell
+        >
+        <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+            <a href="javascript:;">
+                {{ offset + i + 1 }}
+            </a>
+        </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="type">
+        <mat-header-cell class="cell-type" *matHeaderCellDef mat-sort-header
+            >Report Type</mat-header-cell
+        >
+        <mat-cell class="cell-type" *matCellDef="let item">
+            {{ getReportType(item.type) }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="stateDate">
+        <mat-header-cell class="cell-stateDate" *matHeaderCellDef mat-sort-header
+            >Start Date</mat-header-cell
+        >
+        <mat-cell class="cell-stateDate" *matCellDef="let item">
+            {{ item.start_date | date:'y-MM-dd hh:mm a'}}
+        </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="endDate">
+        <mat-header-cell class="cell-endDate" *matHeaderCellDef mat-sort-header
+            >End Date</mat-header-cell
+        >
+        <mat-cell class="cell-endDate" *matCellDef="let item">
+            {{ item.end_date | date:'y-MM-dd hh:mm a'}}
+        </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="filter">
+        <mat-header-cell class="cell-filter" *matHeaderCellDef mat-sort-header
+            >Filter</mat-header-cell
+        >
+        <mat-cell class="cell-filter" *matCellDef="let item">
+            {{ formatFilter(item.filter) }}
+        </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="status">
+        <mat-header-cell class="cell-status" *matHeaderCellDef mat-sort-header
+            >Status</mat-header-cell
+        >
+        <mat-cell class="cell-status" *matCellDef="let item">
+            <span [innerHTML]="getReportStatus(item.status)"></span>
+        </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="time">
+        <mat-header-cell class="cell-time" *matHeaderCellDef mat-sort-header
+            >EventTime</mat-header-cell
+        >
+        <mat-cell class="cell-time" *matCellDef="let item">
+            {{ item.completed_at | date:'y-MM-dd hh:mm a'}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="log">
+        <mat-header-cell class="cell-log" *matHeaderCellDef mat-sort-header
+            >Log</mat-header-cell
+        >
+        <mat-cell class="cell-log" *matCellDef="let item">
+            {{ item.log | excerpt: 200 }}
+        </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="actions">
+        <mat-header-cell class="cell-actions" *matHeaderCellDef
+            >Actions</mat-header-cell
+        >
+        <mat-cell class="cell-actions" *matCellDef="let item">
+            <button *ngIf="item.status == 2" mat-icon-button (click)="download(item)"><mat-icon>file_download</mat-icon></button>
+        </mat-cell>
+    </ng-container>
+    
+    <mat-header-row
+        *matHeaderRowDef="columnHeaders; sticky: true"
+    ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+</table>
+<div class="text-center margin-333" *ngIf="reportStatuses.length === 0">No Records Found!</div>
+  

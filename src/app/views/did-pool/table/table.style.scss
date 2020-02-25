@@ -1,0 +1,21 @@
+.cell-srno {
+  flex: 0 0 35px;
+}
+.cell-name {
+  flex: 1;
+  min-width: 300px;
+}
+
+.cell-gatewayProvider {
+  flex: 0 0 150px;
+}
+
+.cell-metric {
+  flex: 0 0 100px;
+  justify-content: center;
+  text-align: center;
+}
+
+.cell-actions {
+  flex: 0 0 150px;
+}

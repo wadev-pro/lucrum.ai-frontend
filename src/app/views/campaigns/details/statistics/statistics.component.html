@@ -1,0 +1,29 @@
+<div fxLayout="column">
+    <mat-tab-group dynamicHeight>
+        <mat-tab label="Message Counts">
+            <ng-template matTabContent>
+                <app-campaign-details-statistics-message-counts></app-campaign-details-statistics-message-counts>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Carrier Statistics">
+            <ng-template matTabContent>
+                <app-campaign-details-statistics-carrier-statistics></app-campaign-details-statistics-carrier-statistics>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="DID Statistics">
+            <ng-template matTabContent>
+                <app-campaign-details-statistics-did-statistics></app-campaign-details-statistics-did-statistics>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Message Templates Statistics">
+            <ng-template matTabContent>
+                <app-campaign-details-statistics-message-templates-statistics></app-campaign-details-statistics-message-templates-statistics>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="TLD Statistics">
+            <ng-template matTabContent>
+                <app-campaign-details-statistics-tld-statistics></app-campaign-details-statistics-tld-statistics>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>

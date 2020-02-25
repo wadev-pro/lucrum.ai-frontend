@@ -1,0 +1,22 @@
+.cell-srno {
+  flex: 0 0 35px;
+}
+.cell-tld {
+  flex: 1;
+  min-width: 200px;
+}
+
+.cell-metric {
+  flex: 0 0 100px;
+  justify-content: center;
+}
+
+.breadcrumb {
+  margin-top: 0.3rem;
+  li {
+    font-size: 0.875rem;
+    a {
+      font-size: unset;
+    }
+  }
+}

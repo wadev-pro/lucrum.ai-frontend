@@ -1,0 +1,506 @@
+<mat-card class="margin-333">
+    <form [formGroup]="numberLookupForm" (ngSubmit)="submit()">
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+            <mat-form-field>
+                <input
+                matInput
+                name="number"
+                [formControl]="numberLookupForm.controls['number']"
+                placeholder="Phone Number">
+            </mat-form-field>
+            <div>
+                <button mat-raised-button color="primary" [disabled]="numberLookupForm.invalid">{{"SEARCH" | translate }}</button>
+            </div>
+        </div>
+    </form>
+</mat-card>
+
+<mat-card class="margin-333" *ngIf="lead">
+    <mat-card-title class="mb-1 light-gray">
+        <h1 class="text-center">Lead Info</h1>
+    </mat-card-title>
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" class="pt-1">
+        <div fxFlex="50" class="pr-1">
+            <fieldset class="standard">
+                <legend>Person Info</legend>
+                <mat-form-field class="full-width" floatLabel="always">
+                    <mat-label> FirstName</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        name="FirstName"
+                        value={{lead.leadInfo.personInfo.FirstName}}
+                        disabled
+                    />
+                </mat-form-field>
+                <mat-form-field class="full-width" floatLabel="always">
+                    <mat-label> LastName</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        name="Lastname"
+                        value={{lead.leadInfo.personInfo.Lastname}}
+                        disabled
+                    />
+                </mat-form-field>
+                <mat-form-field class="full-width" floatLabel="always">
+                    <mat-label> Phone</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        name="Phone"
+                        value={{lead.leadInfo.personInfo.Phone}}
+                        disabled
+                    />
+                </mat-form-field>
+                <mat-form-field class="full-width" floatLabel="always">
+                    <mat-label> City</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        name="City"
+                        value={{lead.leadInfo.personInfo.City}}
+                        disabled
+                    />
+                </mat-form-field>
+                <mat-form-field class="full-width" floatLabel="always">
+                    <mat-label> State</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        name="State"
+                        value={{lead.leadInfo.personInfo.State}}
+                        disabled
+                    />
+                </mat-form-field>
+                <mat-form-field class="full-width" floatLabel="always">
+                    <mat-label> Zip</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        name="Zip"
+                        value={{lead.leadInfo.personInfo.Zip}}
+                        disabled
+                    />
+                </mat-form-field>
+                    
+            </fieldset>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <fieldset class="standard">
+                <legend>Carrier Info</legend>
+                <mat-form-field class="full-width" floatLabel="always">
+                    <mat-label> Carrier</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        name="carrier"
+                        value={{lead.leadInfo.carrierInfo.carrier}}
+                        disabled
+                    />
+                </mat-form-field>
+                <mat-form-field class="full-width" floatLabel="always">
+                    <mat-label> IsMobileCarrier</mat-label>
+                    <input
+                        matInput
+                        type="text" disabled style="display: none"/>
+                    <mat-chip
+                        class="status" 
+                        color={{getBoolColor(lead.leadInfo.carrierInfo.isMobileCarrier)}}
+                        [selected]="lead.leadInfo.carrierInfo.isMobileCarrier != null" 
+                    >{{getBoolLabel(lead.leadInfo.carrierInfo.isMobileCarrier)}}
+                    </mat-chip>
+                </mat-form-field>
+                <mat-form-field class="full-width" floatLabel="always">
+                    <mat-label> Country</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        name="country"
+                        value={{lead.leadInfo.carrierInfo.country}}
+                        disabled
+                    />
+                </mat-form-field>
+            </fieldset>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> CreatedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="createdAt"
+                    value="{{lead.leadInfo.createdAt  | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastUpdatedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastUpdateAt"
+                    value="{{lead.leadInfo.lastUpdateAt  | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> IsCreated</mat-label>
+                <input
+                    matInput
+                    type="text" disabled style="display: none"/>
+                <mat-chip class="status" color={{getBoolColor(lead.leadInfo.isCreated)}} [selected]="lead.leadInfo.isCreated != null" >{{getBoolLabel(lead.leadInfo.isCreated)}}</mat-chip>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> IsBlacklisted</mat-label>
+                <input
+                    matInput
+                    type="text" disabled style="display: none"/>
+                <mat-chip class="status" color={{getBoolColor(lead.leadInfo.isBlacklisted)}} [selected]="lead.leadInfo.isBlacklisted != null" >{{getBoolLabel(lead.leadInfo.isBlacklisted)}}</mat-chip>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> BlacklistedType</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="blacklistedType"
+                    value="{{lead.leadInfo.blacklistedType}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> BlacklistedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="blacklistedAt"
+                    value="{{lead.leadInfo.blacklistedAt  | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+    </div>
+</mat-card>
+
+<mat-card class="margin-333" *ngIf="lead">
+    <mat-card-title class="mb-1 light-gray">
+        <h1 class="text-center">Statistics</h1>
+    </mat-card-title>
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" class="pt-1">
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> ClickCount</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="clickCount"
+                    value="{{lead.statistics.clickCount}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> SentMessageCount</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="sentMessageCount"
+                    value="{{lead.statistics.sentMessageCount}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> ReceivedMessageCount</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="receivedMessageCount"
+                    value="{{lead.statistics.receivedMessageCount}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> PayoutCount</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="payoutCount"
+                    value="{{lead.statistics.payoutCount}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> FirstMessageSentAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="firstMessageSentAt"
+                    value="{{lead.statistics.firstMessageSentAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastMessageSentAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastMessageSentAt"
+                    value="{{lead.statistics.lastMessageSentAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> FirstMessageReceivedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="firstMessageReceivedAt"
+                    value="{{lead.statistics.firstMessageReceivedAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastMessageReceivedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastMessageReceivedAt"
+                    value="{{lead.statistics.lastMessageReceivedAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> OptInAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="optInAt"
+                    value="{{lead.statistics.optInAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> OptOutAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="optOutAt"
+                    value="{{lead.statistics.optOutAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> FirstReplyReceivedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="firstReplyReceivedAt"
+                    value="{{lead.statistics.firstReplyReceivedAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastReplyAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastReplyAt"
+                    value="{{lead.statistics.lastReplyAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastReceivedMessageClassificationType</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastReceivedMessageClassificationType"
+                    value="{{lead.statistics.lastReceivedMessageClassificationType}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> FirstComplainReceivedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="firstComplainReceivedAt"
+                    value="{{lead.statistics.firstComplainReceivedAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastComplainReceivedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastComplainReceivedAt"
+                    value="{{lead.statistics.lastComplainReceivedAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> FirstClickReceivedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="firstClickReceivedAt"
+                    value="{{lead.statistics.firstClickReceivedAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastClickReceivedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastClickReceivedAt"
+                    value="{{lead.statistics.lastClickReceivedAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastClickReceivedAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastClickReceivedAt"
+                    value="{{lead.statistics.lastClickReceivedAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> FirstPayoutAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="firstPayoutAt"
+                    value="{{lead.statistics.firstPayoutAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastPayoutAt</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastPayoutAt"
+                    value="{{lead.statistics.lastPayoutAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> TotalPayoutAmount</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="totalPayoutAmount"
+                    value="{{lead.statistics.totalPayoutAmount}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> FirstPayoutAmount</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="firstPayoutAmount"
+                    value="{{lead.statistics.firstPayoutAmount}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LastPayoutAmount</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lastPayoutAmount"
+                    value="{{lead.statistics.lastPayoutAmount}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> LowestPayoutAmount</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="lowestPayoutAmount"
+                    value="{{lead.statistics.lowestPayoutAmount}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> HighestPayoutAmount</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="highestPayoutAmount"
+                    value="{{lead.statistics.highestPayoutAmount}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        
+    </div>
+</mat-card>

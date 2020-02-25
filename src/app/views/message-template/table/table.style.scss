@@ -1,0 +1,27 @@
+.cell-srno {
+  flex: 0 0 35px;
+}
+.cell-name {
+  flex: 0 0 200px;
+  min-width: 200px;
+}
+
+.cell-template {
+  flex: 1;
+}
+
+.cell-templateGroup {
+  flex: 0 0 200px;
+}
+
+.cell-date {
+  flex: 0 0 150px;
+}
+
+.cell-active {
+  flex: 0 0 100px;
+  text-align: center;
+}
+.cell-actions {
+  flex: 0 0 150px;
+}

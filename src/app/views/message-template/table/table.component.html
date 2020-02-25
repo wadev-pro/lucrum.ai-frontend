@@ -1,0 +1,82 @@
+<table class="w-100" mat-table *ngIf="messageTemplates" [dataSource]="messageTemplates" matSort (matSortChange)="sortData($event)">
+    <ng-container matColumnDef="srNo" sticky>
+        <mat-header-cell class="cell-srno" *matHeaderCellDef
+            >Sr #</mat-header-cell
+        >
+        <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+            <a href="javascript:;">
+                {{ offset + i + 1 }}
+            </a>
+        </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="name">
+        <mat-header-cell class="cell-name" *matHeaderCellDef mat-sort-header
+            >Name</mat-header-cell
+        >
+        <mat-cell class="cell-name" *matCellDef="let item">
+            {{ item.name | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="templateGroup">
+        <mat-header-cell class="cell-templateGroup" *matHeaderCellDef mat-sort-header
+            >Template Group</mat-header-cell
+        >
+        <mat-cell class="cell-templateGroup" *matCellDef="let item">
+            {{ item.templateGroup | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="template">
+        <mat-header-cell class="cell-template" *matHeaderCellDef mat-sort-header
+            >Template</mat-header-cell
+        >
+        <mat-cell class="cell-template" *matCellDef="let item">
+            {{ item.template | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="createdAt">
+        <mat-header-cell class="cell-createdAt cell-date" *matHeaderCellDef mat-sort-header
+            >Create At</mat-header-cell
+        >
+        <mat-cell class="cell-createdAt cell-date" *matCellDef="let item">
+            {{ item.createdAt | date:'y-MM-dd hh:mm a'}}
+        </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="lastUpdateAt">
+      <mat-header-cell class="cell-updatedAt cell-date" *matHeaderCellDef mat-sort-header
+          >Updated At</mat-header-cell
+      >
+      <mat-cell class="cell-updatedAt cell-date" *matCellDef="let item">
+          {{ item.lastUpdateAt | date:'y-MM-dd hh:mm a'}}
+      </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="isRemoved">
+      <mat-header-cell class="cell-isRemoved cell-active" *matHeaderCellDef mat-sort-header
+          >Active</mat-header-cell
+      >
+      <mat-cell class="cell-isRemoved cell-active" *matCellDef="let item">
+        <mat-chip mat-sm-chip [color]="getBoolColor(!item.isRemoved)" [selected]="true" >{{ item.isRemoved ? 'Inactive': 'Active'}}</mat-chip>
+      </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="actions">
+      <mat-header-cell class="cell-actions" *matHeaderCellDef
+          >Actions</mat-header-cell
+      >
+      <mat-cell class="cell-actions" *matCellDef="let item">
+          <button mat-icon-button routerLink="./{{item.templateId}}"><mat-icon>details</mat-icon></button>
+          <button mat-icon-button (click)="onEdit(item)"><mat-icon>edit</mat-icon></button>
+          <button *ngIf="!item.isRemoved" mat-icon-button (click)="onDelete(item)"><mat-icon>delete</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+  
+    <mat-header-row
+        *matHeaderRowDef="columnHeaders; sticky: true"
+    ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+  </table>

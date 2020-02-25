@@ -1,0 +1,306 @@
+<div class="detail-information-wrapper">
+    <mat-card>
+        <mat-card-title class="">
+            <div class="card-title-text">Did Pool Detail</div>
+            <mat-divider></mat-divider>
+        </mat-card-title>
+        <mat-card-content class="mt-1" *ngIf="isReady">
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Name</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="name"
+                            [value]="didPool?.name"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Current Size</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="currentSize"
+                            [value]="didPool?.currentSize"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <!--<div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Username</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="name"
+                            [value]="didPool?.username"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Password</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="password"
+                            [value]="didPool?.password"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>-->
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Min Size</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="minsize"
+                            [value]="didPool?.minPoolSize"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Max Size</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="maxsize"
+                            [value]="didPool?.maxDidPoolSize"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Auto Purchase DIDs</mat-label>
+                        <input
+                            matInput
+                            type="text" disabled style="display: none"/>
+                        <mat-slide-toggle
+                            [checked]="didPool?.autoPurchaseDids">
+                        </mat-slide-toggle>
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>DID Cost</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="maxsize"
+                            [value]="didPool?.didCostAmount"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>MT SMS Cost</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="maxsize"
+                            [value]="didPool?.mtSmsCost"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Created By</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="maxsize"
+                            [value]="didPool?.createdBy"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Created At</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="maxsize"
+                            [value]="didPool?.createdAt | date:'y-MM-dd hh:mm a'"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Updated By</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="maxsize"
+                            [value]="didPool?.lastUpdateBy"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Updated At</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="maxsize"
+                            [value]="didPool?.lastUpdateAt | date:'y-MM-dd hh:mm a'"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-title class="">
+            <div class="card-title-text">DIDs</div>
+            <mat-divider></mat-divider>
+        </mat-card-title>
+        <mat-card-content class="mt-1">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="margin-333">
+                <div class="m-333 text-left">
+                    <button mat-raised-button class="mr-05" color="primary" routerLink="./upload_dids">{{"UPLOAD" | translate }} {{"DIDS" | translate }}</button>
+                    <button mat-raised-button class="mr-05" color="primary" (click)="onCopyPasteButton()">Copy/Paste {{"DIDS" | translate }}</button>
+                </div>
+                <mat-form-field class="search-input">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput type="text" name="searchSource" placeholder="Search here" [(ngModel)]="search" #searchInput />
+                </mat-form-field>
+            </div>
+            <mat-progress-bar *ngIf="isReady && (fetching$ | async)" mode="indeterminate"></mat-progress-bar>
+            <table *ngIf="isReady" class="w-100" mat-table [dataSource]="dids" matSort (matSortChange)="sortData($event)">
+                <ng-container matColumnDef="srNo" sticky>
+                    <mat-header-cell class="cell-srno" *matHeaderCellDef
+                        >Sr #</mat-header-cell
+                    >
+                    <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+                        <a href="javascript:;">
+                            {{ offset + i }}
+                        </a>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="did_code">
+                    <mat-header-cell class="cell-code" *matHeaderCellDef mat-sort-header
+                        >Did Code</mat-header-cell
+                    >
+                    <mat-cell class="cell-code" *matCellDef="let item">
+                        {{ item.code }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell class="cell-status" *matHeaderCellDef mat-sort-header
+                        >Status</mat-header-cell
+                    >
+                    <mat-cell class="cell-status" *matCellDef="let item">
+                        <mat-chip mat-sm-chip [color]="getBoolColor(!item?.status)" [selected]="true" >{{ !item?.status ? 'Active': 'Disabled'}}</mat-chip>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="message_gateway_provider_id">
+                        <mat-header-cell class="cell-message_gateway_provider" *matHeaderCellDef mat-sort-header
+                            >Gateway Provider</mat-header-cell
+                        >
+                        <mat-cell class="cell-message_gateway_provider" *matCellDef="let item">
+                            {{ item?.messageGatewayProvider?.name }}
+                        </mat-cell>
+                    </ng-container>
+
+                <ng-container matColumnDef="activated_at">
+                    <mat-header-cell class="cell-activated_at" *matHeaderCellDef mat-sort-header
+                        >Activated At </mat-header-cell
+                    >
+                    <mat-cell class="cell-activated_at" *matCellDef="let item">
+                        {{ item.activatedAt | date:'y-MM-dd hh:mm a'}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="reactivated_at">
+                    <mat-header-cell class="cell-reactivated_at" *matHeaderCellDef mat-sort-header
+                        >Reactivated At </mat-header-cell
+                    >
+                    <mat-cell class="cell-reactivated_at" *matCellDef="let item">
+                        {{ item.reactivatedAt | date:'y-MM-dd hh:mm a'}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="deactivated_at">
+                    <mat-header-cell class="cell-deactivated_at" *matHeaderCellDef mat-sort-header
+                        >Deactivated At </mat-header-cell
+                    >
+                    <mat-cell class="cell-deactivated_at" *matCellDef="let item">
+                        {{ item.deactivatedAt | date:'y-MM-dd hh:mm a'}}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="deactivation_reason">
+                    <mat-header-cell class="cell-deactivation_reason" *matHeaderCellDef mat-sort-header
+                        >Deactivated Reason </mat-header-cell
+                    >
+                    <mat-cell class="cell-deactivation_reason" *matCellDef="let item">
+                        {{ item.deactivationReason }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="is_auto_purchased">
+                    <mat-header-cell class="cell-is_auto_purchased" *matHeaderCellDef mat-sort-header
+                        >Is Auto Purchase? </mat-header-cell
+                    >
+                    <mat-cell class="cell-is_auto_purchased" *matCellDef="let item">
+                        <mat-chip mat-sm-chip [color]="getBoolColor(item?.isAutoPurchased)" [selected]="true" >{{ item?.isAutoPurchased ? 'Yes': 'No'}}</mat-chip>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell class="cell-actions" *matHeaderCellDef
+                        >Actions</mat-header-cell
+                    >
+                    <mat-cell class="cell-actions" *matCellDef="let item">
+                        <button *ngIf="item?.status" mat-icon-button (click)="onActivate(item)"><mat-icon>play_arrow</mat-icon></button>
+                        <button *ngIf="!item?.status" mat-icon-button (click)="onDeactivate(item)"><mat-icon>stop</mat-icon></button>
+                        <button mat-icon-button (click)="onDelete(item)"><mat-icon>delete</mat-icon></button>
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row
+                    *matHeaderRowDef="columnHeaders; sticky: true"
+                ></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+            </table>
+            <mat-paginator
+                #paginator
+                [length]="meta?.total"
+                [pageSize]="meta?.per_page"
+                [pageIndex]="meta?.current_page-1"
+                [pageSizeOptions]="[5, 10, 20]"
+                [showFirstLastButtons]="true"
+                (page)="onPaginateChange($event)"
+            >
+            </mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>

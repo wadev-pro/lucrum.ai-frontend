@@ -1,0 +1,174 @@
+<mat-card>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="margin-333">
+       <app-lucram-calendar (onChange)="onFilterChange($event)"></app-lucram-calendar>
+        <mat-form-field>
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput type="text" name="searchSource" placeholder="Search here" [(ngModel)]="search" #searchInput />
+        </mat-form-field>
+    </div>
+    <mat-progress-bar *ngIf="(fetching$ | async)" mode="indeterminate"></mat-progress-bar>
+    <div class="statistics-table w-100">
+        <table class="w-100" mat-table *ngIf="templateGroup" [dataSource]="templateGroup" matSort (matSortChange)="sortData($event)">
+            <ng-container matColumnDef="srNo" sticky>
+                <mat-header-cell class="cell-srno" *matHeaderCellDef
+                    >Sr #</mat-header-cell
+                >
+                <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+                    <a [href]="item.group_id" target="_blank">
+                        {{ offset + i + 1 }}
+                    </a>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <mat-header-cell class="cell-name" *matHeaderCellDef
+                    >Name</mat-header-cell
+                >
+                <mat-cell class="cell-name" *matCellDef="let item">
+                    {{ item.template.name }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="messagesSent">
+                <mat-header-cell class="cell-message-sent cell-metric" *matHeaderCellDef mat-sort-header
+                    >Messages Sent</mat-header-cell
+                >
+                <mat-cell class="cell-message-sent cell-metric" *matCellDef="let item">
+                    {{ item.sentcount | number }}
+                </mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="mobileClicks">
+                <mat-header-cell class="cell-mobile-click cell-metric" *matHeaderCellDef mat-sort-header
+                    >Mobile Clicks</mat-header-cell
+                >
+                <mat-cell class="cell-mobile-click cell-metric" *matCellDef="let item">
+                    {{ item.mobileclickscount | number }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="otherClicks">
+                <mat-header-cell class="cell-other-click cell-metric" *matHeaderCellDef mat-sort-header
+                    >Other Clicks</mat-header-cell
+                >
+                <mat-cell class="cell-other-click cell-metric" *matCellDef="let item">
+                    {{ item.otherclickscount | number }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="conversionCount">
+                <mat-header-cell class="cell-conversions cell-metric" *matHeaderCellDef mat-sort-header
+                    >Conversions</mat-header-cell
+                >
+                <mat-cell class="cell-conversions cell-metric" *matCellDef="let item">
+                    {{ item.conversioncount | number }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="cost">
+                <mat-header-cell class="cell-cost cell-metric" *matHeaderCellDef mat-sort-header
+                    >Cost</mat-header-cell
+                >
+                <mat-cell class="cell-cost cell-metric" *matCellDef="let item">
+                    {{ item.cost | currency: 'USD' }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="revenue">
+                <mat-header-cell class="cell-revenue cell-metric" *matHeaderCellDef mat-sort-header
+                    >Revenue</mat-header-cell
+                >
+                <mat-cell class="cell-revenue cell-metric" *matCellDef="let item">
+                    {{ item.revenue | currency: 'USD' }}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="profit">
+                <mat-header-cell class="cell-profit cell-metric" *matHeaderCellDef mat-sort-header
+                    >Profit</mat-header-cell
+                >
+                <mat-cell class="cell-profit cell-metric" *matCellDef="let item">
+                    <span [innerHTML]="item.profit | customCurrency"></span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="roi">
+                <mat-header-cell class="cell-roi cell-metric" *matHeaderCellDef mat-sort-header
+                    >ROI</mat-header-cell
+                >
+                <mat-cell class="cell-roi cell-metric" *matCellDef="let item">
+                    <span [innerHTML]="item.roi | customPercent"></span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="ctr">
+                <mat-header-cell class="cell-ctr cell-metric" *matHeaderCellDef mat-sort-header
+                    >CTR</mat-header-cell
+                >
+                <mat-cell class="cell-ctr cell-metric" *matCellDef="let item">
+                    {{ item.ctr | percent: '0.0-3'}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="optRate">
+                <mat-header-cell class="cell-optRate cell-metric" *matHeaderCellDef mat-sort-header
+                    >Opt Rate</mat-header-cell
+                >
+                <mat-cell class="cell-optRate cell-metric" *matCellDef="let item">
+                    {{ item.opt_rate | percent: '0.0-3'}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="complainerRate">
+                <mat-header-cell class="cell-complainerRate cell-metric" *matHeaderCellDef mat-sort-header
+                    >Complainer<br/>Rate</mat-header-cell
+                >
+                <mat-cell class="cell-complainerRate cell-metric" *matCellDef="let item">
+                    {{ item.complainer_rate | percent: '0.0-3'}}
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="replyRate">
+                <mat-header-cell class="cell-replyRate cell-metric" *matHeaderCellDef mat-sort-header
+                    >Reply<br/>Rate</mat-header-cell
+                >
+                <mat-cell class="cell-replyRate cell-metric" *matCellDef="let item">
+                    {{ item.reply_rate | percent: '0.0-3'}}
+                </mat-cell>
+            </ng-container>
+            <!--
+            <ng-container matColumnDef="created">
+                <mat-header-cell class="cell-created" *matHeaderCellDef
+                    >Created</mat-header-cell
+                >
+                <mat-cell class="cell-created" *matCellDef="let item">
+                    {{ item.template.created_at | date:'y-MM-dd hh:mm a' }}
+                </mat-cell>
+            </ng-container>
+            -->
+            <ng-container matColumnDef="actions">
+                <mat-header-cell class="cell-action" *matHeaderCellDef
+                    >Actions</mat-header-cell
+                >
+                <mat-cell class="cell-action" *matCellDef="let item">
+                    <button mat-icon-button routerLink="/message_template/{{item.template.id}}"><mat-icon>details</mat-icon></button>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row
+                *matHeaderRowDef="columnHeaders; sticky: true"
+            ></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+        </table>
+    </div>
+  <mat-paginator
+      #paginator
+      [length]="pagination.length"
+      [pageSize]="pagination.pageSize"
+      [pageIndex]="pagination.pageIndex"
+      [pageSizeOptions]="[5, 10, 20, 50, 100]"
+      [showFirstLastButtons]="true"
+      (page)="onPaginateChange($event)"
+  >
+  </mat-paginator>
+</mat-card>

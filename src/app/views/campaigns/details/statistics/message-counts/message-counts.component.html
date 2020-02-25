@@ -1,0 +1,18 @@
+<div *ngIf="messageCountDidFetch$ | async">
+    <div fxLayout="row wrap">
+        <div class="text-center" fxFlex="100" fxFlex.gt-sm="34" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+            <app-mat-card-item title="Messages Sent" [count]="messageCount.sent_count" icon="fa-envelope-open"></app-mat-card-item>
+        </div>
+        <div class="text-center" fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+            <app-mat-card-item title="Sending Failed Messages" [count]="messageCount.failed_count" icon="fa-times-circle"></app-mat-card-item>
+        </div>
+        <div class="text-center" fxFlex="100" fxFlex.gt-sm="33" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+            <app-mat-card-item title="Processing Failed Messages" [count]="messageCount.processing_failed_count" icon="fa-thumbs-down"></app-mat-card-item>
+        </div>
+    </div>
+    <div fxLayout="row wrap">
+        <div  *ngFor="let item of messageCount.filtered" class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+            <app-mat-card-item [title]="getLabelFromKey(item.key)" [count]="item.doc_count" icon="fa-filter"></app-mat-card-item>
+        </div>
+    </div>
+</div>

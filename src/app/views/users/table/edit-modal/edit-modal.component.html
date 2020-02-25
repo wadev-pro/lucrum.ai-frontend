@@ -1,0 +1,116 @@
+<h1 matDialogTitle>{{data.title}}</h1>
+  <form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+        matInput
+        name="name"
+        [formControl]="itemForm.controls['name']"
+        placeholder="User Name">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1"></div>
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+        matInput
+        name="first_name"
+        [formControl]="itemForm.controls['first_name']"
+        placeholder="First Name">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+        matInput
+        name="last_name"
+        [formControl]="itemForm.controls['last_name']"
+        placeholder="Last Name">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+        type="email"
+        matInput
+        name="email"
+        [formControl]="itemForm.controls['email']"
+        placeholder="Email">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+        type="password"
+        matInput
+        name="password"
+        [formControl]="itemForm.controls['password']"
+        placeholder="Password">
+        <mat-hint *ngIf="type === 'edit'" align="start"><strong>Leave it blank if you change password</strong> </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+            matInput
+            type="number"
+            name="mtMessageWithLinkPrice"
+            [formControl]="itemForm.controls['mtMessageWithLinkPrice']"
+            placeholder="Message With Link Price">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+            matInput
+            type="number"
+            name="mtMessageWithoutLinkPrice"
+            [formControl]="itemForm.controls['mtMessageWithoutLinkPrice']"
+            placeholder="Message Without Link Price">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+            matInput
+            type="number"
+            name="mtUserRouteFee"
+            [formControl]="itemForm.controls['mtUserRouteFee']"
+            placeholder="User Route Fee">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+            matInput
+            type="number"
+            name="didPrice"
+            [formControl]="itemForm.controls['didPrice']"
+            placeholder="Did Price">
+      </mat-form-field>
+    </div>
+    <div fxFlex="100"  class="pr-1">
+      <label>Available Funds {{itemForm.controls['balance'].value | currency:'USD'}}</label>
+    </div>
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+            matInput
+            type="number"
+            name="balance"
+            [formControl]="itemForm.controls['addCredits']"
+            placeholder="Add Credits">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100" class="mt-1">
+      <button mat-raised-button color="primary" [disabled]="itemForm.invalid">{{"SAVE" | translate }}</button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </div>
+  </div>
+  </form>

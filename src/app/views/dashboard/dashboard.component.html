@@ -1,0 +1,47 @@
+<div fxLayout="row" fxLayoutAlign="end center">
+    <app-lucram-calendar (onChange)="onChangeDaterange($event)"></app-lucram-calendar>
+</div>
+<mat-progress-bar *ngIf="(fetching$ | async)" mode="indeterminate"></mat-progress-bar>
+<div fxLayout="row wrap">
+    <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+        <app-mat-card-item *ngIf="loadingBalance" title="Available Balance" count="Loading..." icon="fa-dollar"></app-mat-card-item>
+        <app-mat-card-item *ngIf="!loadingBalance" title="Available Balance" [count]="(balance || 0) | currency" icon="fa-dollar"></app-mat-card-item>
+    </div>
+    <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+        <app-mat-card-item title="Messages Sent" [count]="(statistics$ | async).sentcount | number" icon="fa-paper-plane"></app-mat-card-item>
+    </div>
+    <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+        <app-mat-card-item title="Total Mobile Clicks" [count]="(statistics$ | async).mobileclickscount | number" icon="fa-hand-o-up"></app-mat-card-item>
+    </div>
+    <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+        <app-mat-card-item title="Total Other Clicks" [count]="(statistics$ | async).otherclickscount | number" icon="fa-hand-o-up"></app-mat-card-item>
+    </div>
+</div>
+<div fxLayout="row wrap">
+  <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+      <app-mat-card-item title="CTR" [count]="(statistics$ | async).ctr * 100 | number:'1.0-2'" icon="fa-percent"></app-mat-card-item>
+  </div>
+  <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+      <app-mat-card-item title="Total Cost" color="red" [count]="(statistics$ | async).cost | number:'1.0-2'" icon="fa-dollar"></app-mat-card-item>
+  </div>
+  <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+      <app-mat-card-item title="Total Revenue" color="green" [count]="(statistics$ | async).revenue | number:'1.0-2'" icon="fa-dollar"></app-mat-card-item>
+  </div>
+  <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+      <app-mat-card-item title="Total Profit" [color]="(statistics$ | async).profit >= 0 ? 'green' : 'red'" [count]="(statistics$ | async).profit | number:'1.0-2'" icon="fa-dollar"></app-mat-card-item>
+  </div>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="center">
+  <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+    <app-mat-card-item title="Total ROI" [color]="((statistics$ | async).roi * 100) >= 0 ? 'green' : 'red'" [count]="(statistics$ | async).roi * 100 | number:'1.0-2'" icon="fa-percent"></app-mat-card-item>
+  </div>
+  <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+      <app-mat-card-item title="Opt Rate" [count]="(statistics$ | async).opt_rate * 100 | number:'1.0-2'" icon="fa-percent"></app-mat-card-item>
+  </div>
+  <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+      <app-mat-card-item title="Complainer Rate" [count]="(statistics$ | async).complainer_rate * 100 | number:'1.0-2'" icon="fa-percent"></app-mat-card-item>
+  </div>
+  <div class="text-center" fxFlex="100" fxFlex.gt-sm="25" fxFlex.sm="50" [@animate]="{value:'*',params:{delay:'300ms',scale:'.9'}}">
+      <app-mat-card-item title="Reply Rate" [count]="(statistics$ | async).reply_rate * 100 | number:'1.0-2'" icon="fa-percent"></app-mat-card-item>
+  </div>
+</div>

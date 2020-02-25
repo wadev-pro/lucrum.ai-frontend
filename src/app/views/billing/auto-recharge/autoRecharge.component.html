@@ -1,0 +1,47 @@
+<mat-card>
+  <div>
+    <span class="mat-h2 base-color">Set your auto recharge settings</span>
+  </div>
+  <mat-card-content>
+    <form novalidate (ngSubmit)="saveSettings(autoRechargeForm.value)" [formGroup]="autoRechargeForm" class="pt-1 mt-1">
+      <div fxLayout.lt-md="column" fxLayout.gt-md="row">
+        <mat-form-field class="full-width pr-1">
+          <input
+            matInput
+            formControlName="fallonAmount"
+            placeholder="If my balance falls below"
+            type="number"
+            required
+          >
+        </mat-form-field>
+        <mat-form-field class="full-width pr-1">
+          <input
+            matInput
+            formControlName="rechargeAmount"
+            placeholder="Recharge with the following amount"
+            type="number"
+            required
+          >
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-select formControlName="cardId" placeholder="Select your payment card" required>
+            <mat-option *ngFor="let card of userCards" [value]="card.id">
+              Ending in <span class="mat-h3">XXXX{{card.cardNumber}} </span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+        <mat-slide-toggle
+            formControlName="active">
+            Auto recharge status
+        </mat-slide-toggle>
+        <div fxFlex></div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="autoRechargeForm.invalid">
+          Save Settings
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+

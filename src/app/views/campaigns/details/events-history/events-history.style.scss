@@ -1,0 +1,15 @@
+.mat-expansion-panel-header-description {
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.detail {
+  p {
+    text-align: center;
+    strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+  }
+}

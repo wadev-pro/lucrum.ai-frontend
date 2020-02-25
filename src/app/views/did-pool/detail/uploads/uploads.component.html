@@ -1,0 +1,97 @@
+<div class="detail-information-wrapper">
+    <div fxLayout="row wrap" fxLayoutAlign="center center" class="margin-333">
+        <mat-card class="file-upload-block">
+            <mat-card-title class="">
+                <div class="card-title-text">Upload File</div>
+            </mat-card-title>
+            <mat-card-content class="mt-1 text-center file-upload-block__icon-group" (click)="onFileSelect()">
+                <mat-icon class="file-upload-block__upload-icon" color="primary">cloud_upload</mat-icon>
+                <span class="file-upload-block__title">Choose File</span>
+                <input #inputFile class="file-upload-block__file" type="file" (change)="fileChangeEvent($event)" />
+            </mat-card-content>
+            <mat-card-content *ngIf="fileSelected" class="text-center file-upload-block__detail-group">
+                <span>{{ fileName }}</span>
+                <div class="m-333 text-center">
+                    <button mat-raised-button class="mr-05" color="primary" (click)="uploadFile()">{{"UPLOAD" | translate }}</button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <mat-card>
+        <mat-card-title class="">
+            <div class="card-title-text">Upload Status</div>
+            <mat-divider></mat-divider>
+        </mat-card-title>
+        <mat-card-content class="mt-1">
+            <mat-card-content>
+                <div class="m-333 text-right">
+                    <button mat-raised-button class="mr-05" color="primary" routerLink="../">{{"BACK" | translate }}</button>
+                </div>
+            </mat-card-content>
+            <mat-progress-bar *ngIf="fetching" mode="indeterminate"></mat-progress-bar>
+            <table class="w-100" mat-table [dataSource]="uploadStatus">
+                <ng-container matColumnDef="srNo" sticky>
+                    <mat-header-cell class="cell-srno" *matHeaderCellDef
+                        >Sr #</mat-header-cell
+                    >
+                    <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+                        <a href="javascript:;">
+                            {{ offset + i }}
+                        </a>
+                    </mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef="uploaderId">
+                    <mat-header-cell class="cell-uploaderId" *matHeaderCellDef
+                        >Upload ID</mat-header-cell
+                    >
+                    <mat-cell class="cell-uploaderId" *matCellDef="let item">
+                        {{ item.uploaderId }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <mat-header-cell class="cell-status" *matHeaderCellDef
+                        >Status</mat-header-cell
+                    >
+                    <mat-cell class="cell-status" *matCellDef="let item">
+                        <mat-chip mat-sm-chip [color]="getStatusColor(item?.status)" [selected]="true" >{{ getStatsLabel(item?.status) }}</mat-chip>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="successfullyUploadedCount">
+                    <mat-header-cell class="cell-successfullyUploadedCount" *matHeaderCellDef
+                        >Total DIDs Uploaded </mat-header-cell
+                    >
+                    <mat-cell class="cell-successfullyUploadedCount" *matCellDef="let item">
+                        {{ item.successfullyUploadedCount }}
+                    </mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef="uploadedFileDidCount">
+                    <mat-header-cell class="cell-uploadedFileDidCount" *matHeaderCellDef
+                        >Uploaded File DIDs Count</mat-header-cell
+                    >
+                    <mat-cell class="cell-uploadedFileDidCount" *matCellDef="let item">
+                        {{ item.uploadedFileDidCount }}
+                    </mat-cell>
+                </ng-container>
+
+                <mat-header-row
+                    *matHeaderRowDef="columnHeaders; sticky: true"
+                ></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+            </table>
+            <mat-paginator
+                #paginator
+                [length]="pagination.length"
+                [pageSize]="pagination.pageSize"
+                [pageIndex]="pagination.pageIndex"
+                [pageSizeOptions]="[5, 10, 20]"
+                [showFirstLastButtons]="true"
+                (page)="onPaginateChange($event)"
+            >
+            </mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>

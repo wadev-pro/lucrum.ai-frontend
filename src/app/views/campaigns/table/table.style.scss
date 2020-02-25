@@ -1,0 +1,26 @@
+.cell-srno {
+  flex: 0 0 35px;
+}
+.cell-name {
+  flex: 1;
+  min-width: 200px;
+}
+.cell-processing-status {
+  flex: 0 0 120px;
+  display: flex;
+  justify-content: center;
+}
+
+.cell-metric {
+  flex: 0 0 90px;
+  justify-content: center;
+}
+
+.cell-created {
+  flex: 0 0 150px;
+}
+
+.cell-action {
+  justify-content: center;
+  flex: 0 0 50px;
+}

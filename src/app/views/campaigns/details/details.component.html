@@ -1,0 +1,40 @@
+<mat-progress-bar mode="indeterminate" *ngIf="isFetching"></mat-progress-bar>
+<div class="margin-333" [@.disabled]="true">
+    <mat-tab-group dynamicHeight >
+        <mat-tab label="Information">
+            <ng-template matTabContent>
+                <app-campaign-details-information></app-campaign-details-information>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Events History">
+            <ng-template matTabContent>
+                <app-campaign-details-events-history></app-campaign-details-events-history>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Statistics">
+            <ng-template matTabContent>
+                <app-campaign-details-statistics></app-campaign-details-statistics>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Domain Pools">
+            <ng-template matTabContent>
+                <app-campaign-details-domain-pools></app-campaign-details-domain-pools>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Message Report">
+            <ng-template matTabContent>
+                <app-campaign-details-messages-report></app-campaign-details-messages-report>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Clickers Report">
+            <ng-template matTabContent>
+                <app-campaign-details-clickers-report></app-campaign-details-clickers-report>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Conversion Report">
+            <ng-template matTabContent>
+                <app-campaign-details-conversion-report></app-campaign-details-conversion-report>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>

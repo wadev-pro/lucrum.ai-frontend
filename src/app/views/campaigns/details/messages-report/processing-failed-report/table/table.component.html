@@ -1,0 +1,73 @@
+
+<table class="w-100" mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="srNo" sticky>
+        <mat-header-cell class="cell-srno" *matHeaderCellDef mat-sort-header
+            >Sr #</mat-header-cell
+        >
+        <mat-cell class="cell-srno" *matCellDef="let item">
+            <a [href]="item.srNo" target="_blank">
+                {{ item.srNo }}
+            </a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="craftedMessage">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Crafted Message</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.craftedMessage }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="messageTemplateGroup">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Message Template Group</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.messageTemplateGroup }}
+        </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="messageTemplate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Message Template</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.messageTemplate }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="carrier">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Carrier</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.carrier }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="personInfo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Person Info</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.personInfo }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="exception">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Exception</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.exception }}
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row
+        *matHeaderRowDef="columnHeaders; sticky: true"
+    ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+</table>

@@ -1,0 +1,80 @@
+<table class="w-100" mat-table *ngIf="leads" [dataSource]="leads" matSort (matSortChange)="sortData($event)">
+    <ng-container matColumnDef="srNo" sticky>
+        <mat-header-cell class="cell-srno" *matHeaderCellDef
+            >Sr #</mat-header-cell
+        >
+        <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+            <a href="javascript:;">
+                {{ offset + i + 1 }}
+            </a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="firstName">
+        <mat-header-cell class="cell-firstName" *matHeaderCellDef mat-sort-header
+            >First Name</mat-header-cell
+        >
+        <mat-cell class="cell-firstName" *matCellDef="let item">
+            {{ item.firstname | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+        <mat-header-cell class="cell-lastName" *matHeaderCellDef mat-sort-header
+            >Last Name</mat-header-cell
+        >
+        <mat-cell class="cell-lastName" *matCellDef="let item">
+            {{ item.lastname | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="email">
+        <mat-header-cell class="cell-email" *matHeaderCellDef mat-sort-header
+            >Email</mat-header-cell
+        >
+        <mat-cell class="cell-email" *matCellDef="let item">
+            {{ item.email | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="phone">
+        <mat-header-cell class="cell-phone" *matHeaderCellDef mat-sort-header
+            >Phone</mat-header-cell
+        >
+        <mat-cell class="cell-phone" *matCellDef="let item">
+            {{ item.phone | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="city">
+        <mat-header-cell class="cell-city" *matHeaderCellDef mat-sort-header
+            >City</mat-header-cell
+        >
+        <mat-cell class="cell-city" *matCellDef="let item">
+            {{ item.city | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="state">
+        <mat-header-cell class="cell-state" *matHeaderCellDef mat-sort-header
+            >State</mat-header-cell
+        >
+        <mat-cell class="cell-state" *matCellDef="let item">
+            {{ item.state | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="zip">
+        <mat-header-cell class="cell-zip" *matHeaderCellDef mat-sort-header
+            >Zip</mat-header-cell
+        >
+        <mat-cell class="cell-zip" *matCellDef="let item">
+            {{ item.zip | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row
+        *matHeaderRowDef="columnHeaders; sticky: true"
+    ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+</table>

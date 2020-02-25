@@ -1,0 +1,8 @@
+.cell-srno {
+  flex: 0 0 50px;
+}
+
+.cell-metric {
+  flex: 0 0 100px;
+  justify-content: center;
+}

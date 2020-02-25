@@ -1,0 +1,21 @@
+.detail-information-wrapper {
+  padding: 30px 20px;
+  mat-form-field {
+    width: 100%;
+  }
+  input,
+  textarea {
+    line-height: 22px;
+  }
+  .process-status {
+    padding: 3px 15px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .detail-information-wrapper {
+    padding: 20px 10px;
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}

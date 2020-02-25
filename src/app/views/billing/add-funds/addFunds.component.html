@@ -1,0 +1,103 @@
+<mat-card>
+  <mat-card-header>
+    <span class="mat-h2 base-color">Pay now!</span>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-horizontal-stepper linear #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup" #selectionForm>
+          <ng-template matStepLabel>Setup payment</ng-template>
+            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+                <div fxFlex="50">
+                    <label class="mat-card-subtitle">Select payment amount</label>
+                    <mat-radio-group
+                            aria-labelledby="radio-group-label"
+                            class="radio-group base-color"
+                            formControlName="amount"
+                    >
+                        <mat-radio-button class="radio-button" *ngFor="let package of packages; let i = index" [value]="package">
+                            $ {{package}}
+                        </mat-radio-button>
+                        <mat-radio-button class="radio-button" [value]="-1">
+                            <span matPrefix>$ &nbsp;</span>
+                            <mat-form-field style="max-width: 100px">
+                                <input
+                                    matInput
+                                    min="1"
+                                    formControlName="state"
+                                    type="number"
+                                    formControlName="customAmount"
+                                >
+                            </mat-form-field>
+                            <span matPrefix> Other Amount</span>
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div fxFlex="50">
+                    <label class="mat-card-subtitle">Select payment method</label>
+                    <mat-list>
+                        <mat-list-item *ngFor="let card of userCards" (click)="onRowClicked(card)">
+                            <div class="float-left base-color">
+                                <div matLine> Ending in <span class="mat-h3">XXXX{{card.cardNumber}} </span></div>
+                                <div matLine> Expires on <span class="mat-h3">{{card.expiresOn}}</span></div>
+                                <div matLine><span class="mat-h3">{{card.name}}</span></div>
+                            </div>
+                            <div *ngIf="selectedCard && selectedCard.id===card.id" class="float-left selected-list-item"><mat-icon color="accent">check</mat-icon></div>
+                            <mat-divider></mat-divider>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </div>
+          <div class="btn-nav-panel">
+            <div fxFlex></div>
+            <button mat-stroked-button color="accent" matStepperNext [disabled]="firstFormGroup.invalid || !selectedCard.active" >Next >></button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup" (ngSubmit)="saveCard()">
+          <ng-template matStepLabel>Review</ng-template>
+            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+              <div fxFlex="50">
+                  <label class="mat-card-subtitle">Payment method</label>
+                  <mat-list>
+                      <mat-list-item>
+                          <div class="float-left base-color">
+                              <div matLine> Ending in <span class="mat-h3">XXXX{{selectedCard.cardNumber}} </span></div>
+                              <div matLine> Expires on <span class="mat-h3">{{selectedCard.expiresOn}}</span></div>
+                              <div matLine><span class="mat-h3">{{selectedCard.name}}</span></div>
+                          </div>
+                          <div class="float-left selected-list-item"><mat-icon color="accent">check</mat-icon></div>
+                          <mat-divider></mat-divider>
+                      </mat-list-item>
+                  </mat-list>
+              </div>
+              <div fxFlex="50">
+                <label class="mat-card-subtitle">Payment amount</label>
+                <span class="mat-h3 base-color">$ {{firstFormGroup.value.amount === -1 ? firstFormGroup.value.customAmount : firstFormGroup.value.amount}}</span>
+              </div>
+              <!--<div fxFlex="33">
+                <label class="mat-card-subtitle">Confirm CVC</label>
+                <mat-form-field>
+                  <input matInput placeholder="CVC" formControlName="cvc" class="base-color" required>
+                </mat-form-field>
+              </div>-->
+            </div>
+            <div class="btn-nav-panel">
+                <button mat-stroked-button color="accent" matStepperPrevious><< Change</button>
+                <div fxFlex></div>
+                <button  mat-raised-button color="primary" type="submit" matStepperNext [disabled]="secondFormGroup.invalid">
+                    <mat-icon>done</mat-icon>
+                    Confirm Payment
+                </button>
+            </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        Thank you!
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-card-content>
+</mat-card>
+

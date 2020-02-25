@@ -1,0 +1,471 @@
+<div class="detail-information-wrapper" *ngIf="(didFetch$ | async)">
+    <div class="full-width mb-1" *ngIf="isOld">
+        <mat-chip color="accent" >Campaign details are not fully available. Please contact with support team for more detail.</mat-chip>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="flex-end center">
+        <button type="button" (click)="checkCampaign()" *ngIf="getButtonStatus(detail.processingStatus).show_check" mat-raised-button color="primary" class="pr-1">Run Quality Check <mat-icon>directions_run</mat-icon></button>
+        <button type="button" (click)="stopCheckCampaign()" *ngIf="getButtonStatus(detail.processingStatus).show_stop_check" mat-raised-button color="warn">Stop Quality Check <mat-icon>close</mat-icon></button>
+    </div>
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" >
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label> Name</mat-label>
+                <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                disabled
+                >{{detail.name}}</textarea>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Message Template Group</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="messageTemplateGroup"
+                    value={{detail.messageTemplateGroup.name}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label> DID Pool</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="didPool"
+                    value={{detail.didPool.name}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Call Impression URL</mat-label>
+                <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                disabled
+                >{{detail.callImpressionUrl}}</textarea>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Destination URL</mat-label>
+                <textarea matInput
+                cdkTextareaAutosize
+                #autosize="cdkTextareaAutosize"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="5"
+                disabled
+                >{{detail.destinationUrl}}</textarea>
+            </mat-form-field>
+        </div>
+    <div fxFlex="50"  class="pr-1">
+        <mat-form-field floatLabel="always">
+            <mat-label>File URL</mat-label>
+            <input
+                matInput
+                type="text"
+                name="fileUrl"
+                value={{detail.fileUrl}}
+                disabled
+            />
+        </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1">
+        <mat-form-field floatLabel="always">
+            <mat-label>CRON Expression</mat-label>
+            <input
+                matInput
+                type="text"
+                name="cronExpression"
+                value={{detail.cronExpression}}
+                disabled
+            />
+        </mat-form-field>
+    </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Schedule Time</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="scheduleTime"
+                    value="{{detail.scheduleTime | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Inject Test Message</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="injectTestMessage"
+                    value={{detail.injectTestMessageEvery}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Delivery Interval</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="deliveryInterval"
+                    value={{detail.deliveryInterval}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Sub Domain Length</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    value={{detail.subDomainLength}}
+                    value="10"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Processing Status</mat-label>
+                <input
+                    matInput
+                    type="text" disabled style="display: none"/>
+                <mat-chip class="process-status" [color]="processStatus.color" selected>{{processStatus.name}}</mat-chip>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Created By</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="createdBy"
+                    value="{{detail.createdBy}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Created At</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="createdAt"
+                    value="{{detail.createdAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Updated By</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="updatedBy"
+                    value="{{detail.lastUpdateBy}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Updated At</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="createdAt"
+                    value="{{detail.createdAt | date:'y-MM-dd hh:mm a'}}"
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+    </div>
+    <div fxLayout="row" class="pb-1">
+        <div fxFlex="100">
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Advanced Fields
+                    </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div fxLayout="row wrap" fxLayout.lt-sm="column">
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Conversation Id</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="conversationId"
+                                    value="{{detail.conversationId}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Maximum Messages for Non-Clicker</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    value={{detail.maxNumberOfSendMessagesForNoneClickers}}
+                                    value="5"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Quality Check Concurrency Limit</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="qualityCheckConcurrencyLimit"
+                                    value="{{detail.qualityCheckConcurrencyLimit}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Campaign Runner Concurrency Limit</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="campaignRunnerConcurrencyLimit"
+                                    value="{{detail.campaignRunnerConcurrencyLimit}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Disable Carrier Check</mat-label>
+                                <input
+                                    matInput
+                                    type="text" disabled style="display: none"/>
+                                <mat-slide-toggle
+                                    [checked]="detail.disableCarrierCheck">
+                                </mat-slide-toggle>
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Validation Start At</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="validationStartAt"
+                                    value="{{detail.validationStartedAt | date:'y-MM-dd hh:mm a'}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Validation Complete At</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="validationCompleteAt"
+                                    value="{{detail.validationCompletedAt | date:'y-MM-dd hh:mm a'}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Validation Failure Reason</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="validationFailureReason"
+                                    value="{{detail.validationFailureReason}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Last Processing Run At</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="lastProcessingRunAt"
+                                    value="{{detail.lastProcessingRunAt | date:'y-MM-dd hh:mm a'}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Last Processing Exception</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="lastProcessingException"
+                                    value="{{detail.lastProcessingException}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Last Processing Start Request At</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="lastProcessingException"
+                                    value="{{detail.lastProcessingStartRequestedAt | date:'y-MM-dd hh:mm a'}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Last Processing Start Request By</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="lastProcessingStartRequestedBy"
+                                    value="{{detail.lastProcessingStartRequestedBy}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Last Processing Started At</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="lastProcessingStartedAt"
+                                    value="{{detail.lastProcessingStartedAt | date:'y-MM-dd hh:mm a'}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Last Processing Started By</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="lastProcessingStartedBy"
+                                    value="{{detail.lastProcessingStartedBy}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                        <div fxFlex="50"  class="pr-1">
+                            <mat-form-field floatLabel="always">
+                                <mat-label>Last Processing Started From Sequence</mat-label>
+                                <input
+                                    matInput
+                                    type="text"
+                                    name="lastProcessingStartedFromSequenceNumber"
+                                    value="{{detail.lastProcessingStartedFromSequenceNumber}}"
+                                    disabled
+                                />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+    <div fxLayout="row wrap" fxLayout.lt-sm="column">
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field floatLabel="always">
+                <mat-label>Carrier Black List</mat-label>
+                <input
+                    matInput
+                    disabled
+                    style="display: none"
+                />
+                <mat-card class="carrier-black-list-card">
+                    <mat-card-content *ngFor="let item of carrierBlackList; let i = index" class="mb-0">
+                        <mat-form-field class="full-width">
+                            <div class="full-width" fxLayoutAlign="space-between center">
+                                <mat-label class="pr-1">{{item.label}}</mat-label>
+                                <input
+                                    matInput
+                                    type="text" disabled style="display: none"/>
+                                <mat-slide-toggle [checked]="getCarrierSelected(item.label)"></mat-slide-toggle>
+                            </div>
+                        </mat-form-field>
+                    </mat-card-content>
+                </mat-card>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field floatLabel="always" style="width: 100%">
+                <mat-label> Domain Pool</mat-label>
+                <input
+                    matInput
+                    type="text" disabled style="display: none"/>
+                <mat-progress-bar *ngIf="(domainPoolsFetching$ | async)" mode="indeterminate"></mat-progress-bar>
+                <table class="w-100 domain-table" mat-table [dataSource]="filteredDomainPools">
+                    <ng-container matColumnDef="srNo" sticky>
+                        <mat-header-cell class="cell-srno" *matHeaderCellDef
+                            >Sr #</mat-header-cell
+                        >
+                        <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+                            <a [href]="item.domain" target="_blank">
+                                {{ offset + i + 1 }}
+                            </a>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="domain" sticky>
+                            <mat-header-cell class="cell-domain" *matHeaderCellDef
+                                >Domain</mat-header-cell
+                            >
+                            <mat-cell class="cell-domain" *matCellDef="let item">
+                                <a [href]="item.domain" target="_blank">
+                                    {{ item.domain }}
+                                </a>
+                            </mat-cell>
+                        </ng-container>
+                    
+                    <mat-header-row
+                        *matHeaderRowDef="domainColumnHeaders; sticky: true"
+                    ></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: domainColumnHeaders"></mat-row>
+                </table>
+                <mat-paginator
+                    #paginator
+                    [length]="pagination.length"
+                    [pageSize]="pagination.pageSize"
+                    [pageIndex]="pagination.pageIndex"
+                    [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                    [showFirstLastButtons]="true"
+                    (page)="onPaginateChange($event)"
+                >
+                </mat-paginator>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="full-width text-right mt-1">
+    <button type="button" mat-raised-button color="primary" class="mr-1" routerLink="/campaigns">Back to List</button>
+    <button type="button" mat-raised-button color="primary" class="mr-1" routerLink="/campaigns/{{campaign_id}}/edit">Edit</button>
+    <button type="button" mat-raised-button color="primary" class="mr-1" routerLink="/campaigns/{{campaign_id}}/clone">Clone</button>
+</div>

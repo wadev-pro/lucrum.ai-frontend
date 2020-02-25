@@ -1,0 +1,32 @@
+.detail-information-wrapper {
+  mat-form-field {
+    width: 90%;
+    &.search-input {
+      width: auto;
+    }
+  }
+  input,
+  textarea {
+    line-height: 22px;
+  }
+}
+.cell-srno {
+  flex: 0 0 35px;
+}
+.cell-name {
+  flex: 0 0 300px;
+}
+.cell-actions {
+  flex: 0 0 100px;
+}
+
+@media only screen and (max-width: 480px) {
+  .detail-information-wrapper {
+    mat-form-field {
+      width: 100%;
+      &.search-input {
+        width: auto;
+      }
+    }
+  }
+}

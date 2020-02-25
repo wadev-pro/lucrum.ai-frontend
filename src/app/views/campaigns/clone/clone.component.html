@@ -1,0 +1,332 @@
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="uploadFormGroup">
+    <form [formGroup]="uploadFormGroup">
+      <ng-template matStepLabel>Campaign File</ng-template>
+      <div class="full-width">
+        <mat-checkbox
+            name="useSameFile"
+            (change)="onUseSameFileChange($event)"
+            formControlName="useSameFile">
+          Use same file of existing campaign
+        </mat-checkbox>
+        <input formControlName="ready" type="hidden"/>
+      </div>
+      <div class="file-upload-block" *ngIf="!useSameFile">
+        <div class="mt-1 text-center file-upload-block__icon-group" (click)="onFileSelect()">
+          <mat-icon class="file-upload-block__upload-icon" color="primary">cloud_upload</mat-icon>
+          <span class="file-upload-block__title">Choose File</span>
+          <input #inputFile formControlName="uploadfile" class="file-upload-block__file" 
+            type="file" (change)="fileChangeEvent($event)" />
+        </div>
+        <div *ngIf="fileSelected" class="text-center file-upload-block__detail-group">
+          <span>{{ fileSelected.name }}</span>
+          <span>{{ fileSelected.type }}</span>
+          <span>{{ getReadableFileSizeString(fileSelected.size) }}</span>
+        </div>
+      </div>
+      <div class="text-right">
+        <button type="button" mat-raised-button color="primary" class="mr-1" routerLink="/campaigns">
+          Back to List
+        </button>
+        <button mat-raised-button color="primary" matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <form [formGroup]="detailFormGroup">
+      <ng-template matStepLabel>Campaign Detail</ng-template>
+      <mat-card class="campaign-clone-page">
+        <mat-card-title class="m-0 light-gray">
+          <h2>Clone Campaign</h2>
+        </mat-card-title>
+        <div class="full-width mt-1 mb-1" *ngIf="isOld">
+          <mat-chip color="accent" >Campaign details are not fully available. Please contact with support team for more detail.</mat-chip>
+        </div>
+        <mat-progress-bar *ngIf="processing" mode="indeterminate"></mat-progress-bar>
+        <div class="detail-wrapper" fxLayout="row wrap" fxLayout.lt-sm="column" *ngIf="!processing && !isOld">
+          <div fxFlex="50"  class="pr-1">
+            <mat-form-field class="full-width">
+              <input
+              matInput
+              name="campaignName"
+              [formControl]="detailFormGroup.controls['campaignName']"
+              placeholder="Campaign Name">
+            </mat-form-field>
+          </div>
+          <div fxFlex="50"  class="pr-1">
+            <mat-form-field class="full-width">
+              <mat-select [formControl]="detailFormGroup.controls['didPool']" placeholder="Did Pool" #singleSelect>
+                <ngx-mat-select-search *ngIf="true" [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'No matches' "  [formControl]="didPoolFilterCtrl" [preventHomeEndKeyPropagation]="true">
+                  <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                </ngx-mat-select-search>
+                <mat-option *ngFor="let item of filteredDidPools" [value]="item">
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="50"  class="pr-1">
+            <mat-form-field class="full-width">
+              <input
+              matInput
+              name="vertical"
+              [formControl]="detailFormGroup.controls['vertical']"
+              placeholder="Vertical">
+            </mat-form-field>
+          </div>
+          <div fxFlex="50"  class="pr-1">
+            <mat-form-field class="full-width">
+              <input
+              matInput
+              name="fileOwnerTag"
+              [formControl]="detailFormGroup.controls['fileTags']"
+              placeholder="File Owner Tag">
+            </mat-form-field>
+          </div>
+          <div fxFlex="50"  class="pr-1">
+            <mat-form-field class="full-width">
+              <mat-select [formControl]="detailFormGroup.controls['templateGroup']" placeholder="Template Group" #singleSelect (selectionChange)="onTemplateGroupChanged($event)">
+                <ngx-mat-select-search *ngIf="true" [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'No matches' "  [formControl]="templateGroupFilterCtrl" [preventHomeEndKeyPropagation]="true">
+                  <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+                </ngx-mat-select-search>
+                <mat-option *ngFor="let item of filteredTemplateGroups" [value]="item">
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div fxLayoutAlign="space-around center">
+              <button type="button" disabled={{isTemplateButtonDisabled()}} mat-raised-button color="primary" (click)="viewTemplate('template')">View Templates</button>
+              <button type="button" disabled={{isTemplateButtonDisabled()}} mat-raised-button color="accent" (click)="viewTemplate('crafted')">Preview Crafted</button>
+            </div>
+          </div>
+          <div fxFlex="50" class="pr-1">
+            <div class="detail-wrapper" fxLayout="row wrap" fxLayout.lt-sm="column">
+              <mat-form-field fxFlex="50" class="pr-1">
+                <input matInput [min]="scheduleStartDate" [(ngModel)]="scheduleDate" [ngModelOptions]="{standalone: true}" [matDatepicker]="scheduleDatePicker" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="scheduleDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #scheduleDatePicker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field fxFlex="50">
+                <input matInput [(ngModel)]="scheduleTime" [ngModelOptions]="{standalone: true}" [ngxTimepicker]="scheduleTimePicker" placeholder="Choose a Time" [disabled]="!scheduleDate">
+                <mat-datepicker-toggle matSuffix [for]="scheduleTimePicker"></mat-datepicker-toggle>
+                <ngx-material-timepicker [ngxMaterialTimepickerTheme]="darkTheme" #scheduleTimePicker></ngx-material-timepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlex="100"  class="pr-1 mt-1">
+            <mat-form-field floatLabel="always" class="full-width">
+              <mat-label> Domains</mat-label>
+              <textarea matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              [formControl]="detailFormGroup.controls['domains']"
+              cdkAutosizeMinRows="5"
+              cdkAutosizeMaxRows="10"
+              ></textarea>
+            </mat-form-field>
+          </div>
+          <div fxFlex="50"  class="pr-1">
+            <mat-form-field class="full-width">
+              <input
+              matInput
+              name="destinationUrl"
+              [formControl]="detailFormGroup.controls['destinationUrl']"
+              placeholder="Destination URL">
+            </mat-form-field>
+          </div>
+          <div fxFlex="50"  class="pr-1">
+            <mat-form-field class="full-width">
+              <input
+              matInput
+              name="callImpressionUrl"
+              [formControl]="detailFormGroup.controls['callImpressionUrl']"
+              placeholder="Call Impression URL">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+      <div fxLayout="row" class="advanced-setting-wrapper">
+        <div fxFlex="100">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>Advanced Setting</b>
+              </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div fxLayout="row wrap" fxLayout.lt-sm="column" *ngIf="!processing && !isOld">
+                <div fxFlex="50"  class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                    type="number"
+                    matInput
+                    name="qualityCheckConcurrencyLimit"
+                    [formControl]="detailFormGroup.controls['qualityCheckConcurrencyLimit']"
+                    placeholder="Quality Check Concurrency Limit">
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50"  class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                    type="number"
+                    matInput
+                    name="campaignRunnerConcurrencyLimit"
+                    [formControl]="detailFormGroup.controls['campaignRunnerConcurrencyLimit']"
+                    placeholder="Campaign Runner Concurrency Limit">
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50"  class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                    matInput
+                    name="conversationId"
+                    [formControl]="detailFormGroup.controls['conversationId']"
+                    placeholder="Conversation ID">
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50"  class="pr-1">
+                  <mat-form-field class="full-width">
+                    <input
+                    type="number"
+                    matInput
+                    name="maxNumberOfSendMessagesForNoneClicks"
+                    [formControl]="detailFormGroup.controls['maxNumberOfSendMessagesForNoneClicks']"
+                    placeholder="Maximum Messages for Non-Clickers">
+                  </mat-form-field>
+                </div>
+                <div fxFlex="50"  class="pr-1">
+                  <mat-form-field class="full-width">
+                    <div class="full-width" fxLayoutAlign="space-between center">
+                      <mat-label class="pr-1">Disable Carrier Checks</mat-label>
+                      <input
+                          matInput
+                          type="text" disabled style="display: none"/>
+                      <mat-slide-toggle
+                        [formControl]="detailFormGroup.controls['disableCarrierCheck']">
+                      </mat-slide-toggle>
+                    </div>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <mat-card class="campaign-edit-page">
+        <div class="detail-wrapper" fxLayout="row wrap" fxLayout.lt-sm="column" *ngIf="!processing && !isOld">
+          <div fxFlex="25"  class="pr-1">
+            <mat-form-field class="full-width">
+              <input
+              type="number"
+              matInput
+              name="seedMessageEvery"
+              [formControl]="detailFormGroup.controls['seedMessageEvery']"
+              placeholder="Seed Message Every">
+            </mat-form-field>
+          </div>
+          <div fxFlex="25"  class="pr-1">
+            <mat-form-field floatLabel="always" class="full-width custom">
+              <mat-label>Delivery Hours</mat-label>
+              <input
+                matInput
+                style="display: none"
+                disabled>
+              <mat-slider
+                class="full-width custom"
+                thumbLabel
+                min="0"
+                max="12"
+                step="1"
+                name="deliveryAcrossHours"
+                [formControl]="detailFormGroup.controls['deliveryAcrossHours']"
+              ></mat-slider>
+            </mat-form-field>
+          </div>
+          <div fxFlex="25"  class="pr-1">
+            <mat-form-field floatLabel="always" class="full-width">
+              <mat-label>Delivery Minutes</mat-label>
+              <input
+                matInput
+                style="display: none"
+                disabled>
+              <mat-slider
+                class="full-width custom"
+                thumbLabel
+                min="0"
+                max="60"
+                step="1"
+                name="deliveryAcrossMinutes"
+                [formControl]="detailFormGroup.controls['deliveryAcrossMinutes']"
+              ></mat-slider>
+            </mat-form-field>
+          </div>
+          <div fxFlex="25"  class="pr-1">
+            <mat-form-field class="full-width">
+              <input
+              type="number"
+              matInput
+              name="batchSize"
+              [formControl]="detailFormGroup.controls['batchSize']"
+              placeholder="Batch Size">
+            </mat-form-field>
+          </div>
+          <div fxFlex="50"  class="pr-1">
+            <fieldset class="standard">
+              <legend>Person Info</legend>
+              <mat-form-field class="full-width">
+                <div class="full-width" fxLayoutAlign="space-between center">
+                  <mat-label class="pr-1">AT&T</mat-label>
+                  <input
+                      matInput
+                      type="text" disabled style="display: none"/>
+                  <mat-slide-toggle
+                    [formControl]="detailFormGroup.controls['carrierBlacklistAttt']">
+                  </mat-slide-toggle>
+                </div>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <div class="full-width" fxLayoutAlign="space-between center">
+                  <mat-label class="pr-1">SPRINT</mat-label>
+                  <input
+                      matInput
+                      type="text" disabled style="display: none"/>
+                  <mat-slide-toggle
+                    [formControl]="detailFormGroup.controls['carrierBlacklistSprint']">
+                  </mat-slide-toggle>
+                </div>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <div class="full-width" fxLayoutAlign="space-between center">
+                  <mat-label class="pr-1">T-Mobile</mat-label>
+                  <input
+                      matInput
+                      type="text" disabled style="display: none"/>
+                  <mat-slide-toggle
+                    [formControl]="detailFormGroup.controls['carrierBlacklistTmobile']">
+                  </mat-slide-toggle>
+                </div>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <div class="full-width" fxLayoutAlign="space-between center">
+                  <mat-label class="pr-1">Verizon</mat-label>
+                  <input
+                      matInput
+                      type="text" disabled style="display: none"/>
+                  <mat-slide-toggle
+                    [formControl]="detailFormGroup.controls['carrierBlacklistVerizon']">
+                  </mat-slide-toggle>
+                </div>
+              </mat-form-field>
+            </fieldset>
+          </div>
+        </div>
+        <div class="full-width text-right mt-1">
+          <button type="button" mat-raised-button color="primary" class="mr-1" matStepperNext>Back</button>
+          <button *ngIf="!isOld" type="button" mat-raised-button color="primary" (click)="onSubmit()">Clone</button>
+        </div>
+      </mat-card>
+    </form>
+    
+  </mat-step>
+</mat-horizontal-stepper>
+

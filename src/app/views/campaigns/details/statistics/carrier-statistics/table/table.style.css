@@ -1,0 +1,12 @@
+.cell-srno {
+  flex: 0 0 50px;
+}
+.cell-carrier {
+  flex: 1;
+  min-width: 200px;
+}
+
+.cell-metric {
+  flex: 0 0 100px;
+  justify-content: center;
+}

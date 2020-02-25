@@ -1,0 +1,28 @@
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+
+.radio-button {
+    margin: 5px;
+}
+
+.mat-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.mat-list-item:hover {
+    background-color: #4D4D4D;
+    cursor: pointer;
+}
+
+.selected-list-item {
+    width: 30px;
+    margin-left: 10px;
+}
+
+.btn-nav-panel {
+    margin-top: 30px;
+}

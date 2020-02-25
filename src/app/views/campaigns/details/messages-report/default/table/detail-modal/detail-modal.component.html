@@ -1,0 +1,95 @@
+<h1 matDialogTitle>{{data.title}}</h1>
+<div fxLayout="row wrap" fxLayout.lt-sm="column">
+  <div fxFlex="100"  class="pr-1 modal-body-inner-wrapper">
+    <mat-form-field class="full-width">
+      <mat-label>DID Pool</mat-label>
+      <input
+        matInput
+        type="text"
+        name="didPool"
+        value="{{item.did_pool}}"
+        disabled
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>DID</mat-label>
+      <input
+        matInput
+        type="text"
+        name="did"
+        value="{{item.did}}"
+        disabled
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width" floatLabel="always">
+      <mat-label> Crafted Message</mat-label>
+      <textarea matInput
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="1"
+      disabled
+      >{{item.crafted_message}}</textarea>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Message Template Group</mat-label>
+      <input
+        matInput
+        type="text"
+        name="templateGroup"
+        value="{{item.template_group}}"
+        disabled
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>Message Template</mat-label>
+      <input
+        matInput
+        type="text"
+        name="template"
+        value="{{item.template}}"
+        disabled
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width" floatLabel="always">
+      <mat-label> Carrier</mat-label>
+      <textarea matInput
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="1"
+      disabled
+      >{{item.carrier | json}}</textarea>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>To</mat-label>
+      <input
+        matInput
+        type="text"
+        name="to"
+        value="{{item.to}}"
+        disabled
+      />
+    </mat-form-field>
+    <mat-form-field class="full-width" floatLabel="always">
+      <mat-label> Person Info</mat-label>
+      <textarea matInput
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="1"
+      disabled
+      >{{item.lead | json}}</textarea>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Sent At</mat-label>
+        <input
+          matInput
+          type="text"
+          name="sentAt"
+          value="{{ item.sent_at | date:'y-MM-dd hh:mm a' }}"
+          disabled
+        />
+      </mat-form-field>
+  </div>
+  <div fxFlex="100" class="mt-1 text-right">
+    <button mat-raised-button (click)="dialogRef.close(false)" color="primary">{{"OK" | translate }}</button>
+  </div>
+</div>

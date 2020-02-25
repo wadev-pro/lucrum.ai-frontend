@@ -1,0 +1,29 @@
+<div fxLayout="column">
+    <mat-accordion class="mt-1">
+        <mat-expansion-panel  *ngFor="let item of eventHistories; let i = index; let first = first; let last = last" [expanded]="step === i" (opened)="setStep(i)" hideToggle>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon color="accent">check_circle</mat-icon>
+                    <strong class="pl-1">Event Name: {{item.eventName}}</strong>
+                </mat-panel-title>
+                <mat-panel-description>
+                    <strong>{{item.event.timestamp | date:'y-MM-dd hh:mm a'}}</strong>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            
+            <div class="detail">
+                <p>
+                    <strong>Short Description: </strong> {{item.shortEventDescription}}
+                </p>
+                <p>
+                    <strong>Done By:</strong> {{item.event.doneBy}}
+                </p>
+            </div>
+    
+            <mat-action-row>
+                <button *ngIf="!first" mat-raised-button class="mr-1" color="warn" (click)="prevStep()">Previous</button>
+                <button *ngIf="!last" mat-raised-button color="primary" (click)="nextStep()">Next</button>
+            </mat-action-row>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

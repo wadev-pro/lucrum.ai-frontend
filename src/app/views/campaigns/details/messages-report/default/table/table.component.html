@@ -1,0 +1,93 @@
+
+<table class="w-100" mat-table [dataSource]="messageSents" matSort (matSortChange)="sortData($event)">
+    <ng-container matColumnDef="srNo" sticky>
+        <mat-header-cell class="cell-srno" *matHeaderCellDef
+            >Sr #</mat-header-cell
+        >
+        <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+            <a [href]="item.srNo" target="_blank">
+                {{ offset + i + 1 }}
+            </a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="didPool">
+        <mat-header-cell class="cell-didPool" *matHeaderCellDef mat-sort-header
+            >DID Pool</mat-header-cell
+        >
+        <mat-cell class="cell-didPool" *matCellDef="let item">
+            {{ item.did_pool }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="did">
+        <mat-header-cell class="cell-did" *matHeaderCellDef mat-sort-header
+            >DID</mat-header-cell
+        >
+        <mat-cell class="cell-did" *matCellDef="let item">
+            {{ item.did }}
+        </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="craftedMessage">
+        <mat-header-cell class="cell-craftedMessage" *matHeaderCellDef mat-sort-header
+            >Crafted Message</mat-header-cell
+        >
+        <mat-cell class="cell-craftedMessage" *matCellDef="let item">
+            {{ item.crafted_message }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="messageTemplateGroup">
+        <mat-header-cell class="cell-messageTemplateGroup" *matHeaderCellDef mat-sort-header
+            >Message Template Group</mat-header-cell
+        >
+        <mat-cell class="cell-messageTemplateGroup" *matCellDef="let item">
+            {{ item.template_group }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="messageTemplate">
+        <mat-header-cell class="cell-messageTemplate" *matHeaderCellDef mat-sort-header
+            >Message Template</mat-header-cell
+        >
+        <mat-cell class="cell-messageTemplate" *matCellDef="let item">
+            {{ item.template }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="to">
+        <mat-header-cell class="cell-to" *matHeaderCellDef mat-sort-header
+            >To</mat-header-cell
+        >
+        <mat-cell class="cell-to" *matCellDef="let item">
+            {{ item.to }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sentAt">
+        <mat-header-cell class="cell-sentAt" *matHeaderCellDef mat-sort-header
+            >Sent At</mat-header-cell
+        >
+        <mat-cell class="cell-sentAt" *matCellDef="let item">
+            {{ item.sent_at | date:'y-MM-dd hh:mm a' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell class="cell-action" *matHeaderCellDef
+            >More</mat-header-cell
+        >
+        <mat-cell class="cell-action" *matCellDef="let item">
+            <button mat-icon-button (click)="onClickMore(item)">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row
+        *matHeaderRowDef="columnHeaders; sticky: true"
+    ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+</table>

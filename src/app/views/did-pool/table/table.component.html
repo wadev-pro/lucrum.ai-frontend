@@ -1,0 +1,108 @@
+<table class="w-100" mat-table *ngIf="didPools" [dataSource]="didPools" matSort (matSortChange)="sortData($event)">
+    <ng-container matColumnDef="srNo" sticky>
+        <mat-header-cell class="cell-srno" *matHeaderCellDef mat-sort-header
+          >Sr #</mat-header-cell>
+        <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+            <a href="javascript:;">
+                {{ offset + i + 1 }}
+            </a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell class="cell-name" *matHeaderCellDef mat-sort-header
+            >Name</mat-header-cell
+        >
+        <mat-cell class="cell-name" *matCellDef="let item">
+            {{ item.name | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="messageGatewayProviderName">
+        <mat-header-cell class="cell-gatewayProvider" *matHeaderCellDef mat-sort-header
+            >Gateway Provider</mat-header-cell
+        >
+        <mat-cell class="cell-gatewayProvider" *matCellDef="let item">
+            {{ item.messageGatewayProviderName | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="autoPurchaseDids">
+        <mat-header-cell class="cell-autoPurchase cell-metric" *matHeaderCellDef mat-sort-header
+            >Auto Purchase  <br/>Dids</mat-header-cell
+        >
+        <mat-cell class="cell-autoPurchase cell-metric" *matCellDef="let item">
+            <mat-chip mat-sm-chip [color]="getBoolColor(item.autoPurchaseDids)" [selected]="true" >{{item.autoPurchaseDids ? 'Yes' : 'No'}}</mat-chip>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="currentSize">
+        <mat-header-cell class="cell-currentSize cell-metric" *matHeaderCellDef mat-sort-header
+            >Current Size</mat-header-cell
+        >
+        <mat-cell class="cell-currentSize cell-metric" *matCellDef="let item">
+            {{ item.currentSize | number }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="minPoolSize">
+        <mat-header-cell class="cell-minSiz cell-metric" *matHeaderCellDef mat-sort-header
+            >Min Size</mat-header-cell
+        >
+        <mat-cell class="cell-minSiz cell-metric" *matCellDef="let item">
+            {{ item.minPoolSize | number }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="maxDidPoolSize">
+        <mat-header-cell class="cell-maxSize cell-metric" *matHeaderCellDef mat-sort-header
+            >Max Size</mat-header-cell
+        >
+        <mat-cell class="cell-maxSize cell-metric" *matCellDef="let item">
+            {{ item.maxDidPoolSize | number }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="didCostAmount">
+        <mat-header-cell class="cell-didCost cell-metric" *matHeaderCellDef mat-sort-header
+            >DID Cost</mat-header-cell
+        >
+        <mat-cell class="cell-didCost cell-metric" *matCellDef="let item">
+            {{ item.didCostAmount | currency: 'USD' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+        <mat-header-cell class="cell-createdAt" *matHeaderCellDef mat-sort-header
+            >Create At</mat-header-cell
+        >
+        <mat-cell class="cell-createdAt" *matCellDef="let item">
+            {{ item.createdAt | date:'y-MM-dd hh:mm a'}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastUpdateAt">
+        <mat-header-cell class="cell-lastUpdatedAt" *matHeaderCellDef mat-sort-header
+            >Updated At</mat-header-cell
+        >
+        <mat-cell class="cell-lastUpdatedAt" *matCellDef="let item">
+            {{ item.lastUpdateAt | date:'y-MM-dd hh:mm a'}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell class="cell-actions" *matHeaderCellDef
+            >Actions</mat-header-cell
+        >
+        <mat-cell class="cell-actions" *matCellDef="let item">
+            <button mat-icon-button routerLink="./{{item.id}}"><mat-icon>details</mat-icon></button>
+            <button mat-icon-button (click)="onEdit(item)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button routerLink="./{{item.id}}/upload_dids"><mat-icon>file_upload</mat-icon></button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row
+        *matHeaderRowDef="columnHeaders; sticky: true"
+    ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+</table>

@@ -1,0 +1,12 @@
+.cell-srno {
+  flex: 0 0 50px;
+}
+.cell-did {
+  flex: 1;
+  min-width: 100px;
+}
+
+.cell-metric {
+  flex: 0 0 120px;
+  justify-content: center;
+}

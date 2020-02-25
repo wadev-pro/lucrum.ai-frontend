@@ -1,0 +1,122 @@
+
+<table class="w-100" mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="srNo" sticky>
+        <mat-header-cell class="cell-srno" *matHeaderCellDef mat-sort-header
+            >Sr #</mat-header-cell
+        >
+        <mat-cell class="cell-srno" *matCellDef="let item">
+            <a [href]="item.srNo" target="_blank">
+                {{ item.srNo }}
+            </a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tld">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >TLD</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.tld }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="messagesSent">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Messages Sent</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.messagesSent }}
+        </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="mobileClicks">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Mobile Clicks</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.mobileClicks }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="otherClicks">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Other Clicks</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.otherClicks }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Cost</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.cost | currency: 'GBP' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="revenue">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Revenue</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.revenue | currency: 'GBP' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="profit">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Profit</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.profit | currency: 'GBP' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="roi">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >ROI</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.roi | currency: 'GBP' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ctr">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >CTR</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.ctr  }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Created</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            {{ item.created }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+            >Actions</mat-header-cell
+        >
+        <mat-cell *matCellDef="let item">
+            <button mat-icon-button routerLink="/campaigns/details">
+                <mat-icon>details</mat-icon></button>
+            <button mat-icon-button><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button><mat-icon>play_arrow</mat-icon></button>
+            <button mat-icon-button><mat-icon>stop</mat-icon></button>
+            <button mat-icon-button><mat-icon>directions_run</mat-icon></button>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row
+        *matHeaderRowDef="columnHeaders; sticky: true"
+    ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+</table>

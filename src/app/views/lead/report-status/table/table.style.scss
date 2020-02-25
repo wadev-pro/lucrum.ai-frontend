@@ -1,0 +1,16 @@
+.cell-srno {
+  flex: 0 0 50px;
+}
+.cell-filter {
+  flex: 1;
+  min-width: 300px;
+}
+
+.cell-actions {
+  flex: 0 0 50px;
+  justify-content: center;
+}
+.cell-type,
+.cell-status {
+  justify-content: center;
+}

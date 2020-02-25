@@ -1,0 +1,19 @@
+<mat-card>
+    <div fxLayout="row wrap" fxLayoutAlign="flex-end center" class="margin-333">
+        <mat-form-field>
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput type="text" name="searchSource" placeholder="Search here" [(ngModel)]="search" #searchInput />
+        </mat-form-field>
+    </div>
+    <app-campaigns-details-statistics-carrier-statistics-table class="statistics-table display-block w-100"></app-campaigns-details-statistics-carrier-statistics-table>
+    <mat-paginator
+        #paginator
+        [length]="pagination.length"
+        [pageSize]="pagination.pageSize"
+        [pageIndex]="pagination.pageIndex"
+        [pageSizeOptions]="[5, 10, 20, 50, 100]"
+        [showFirstLastButtons]="false"
+        (page)="onPaginateChange($event)"
+    >
+    </mat-paginator>
+</mat-card>

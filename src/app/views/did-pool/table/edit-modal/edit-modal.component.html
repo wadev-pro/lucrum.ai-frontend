@@ -1,0 +1,93 @@
+<h1 matDialogTitle>{{data.title}}</h1>
+<form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+        matInput
+        name="name"
+        [formControl]="itemForm.controls['name']"
+        placeholder="Name">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width" *ngIf="data.type !== 'edit'">
+        <mat-select [formControl]="itemForm.controls['messageGatewayProvider']" placeholder="Gateway Provider" #singleSelect>
+          <ngx-mat-select-search *ngIf="true" [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'No matches' "  [formControl]="groupFilterCtrl" [preventHomeEndKeyPropagation]="true">
+            <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+          </ngx-mat-select-search>
+          <mat-option *ngFor="let item of filteredGatewayProviders" [value]="item">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1" *ngIf="isAdminUser || !isLucrumRoute">
+      <mat-form-field class="full-width">
+        <input
+        matInput
+        name="did_username"
+        [formControl]="itemForm.controls['username']"
+        placeholder="Username">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1" *ngIf="isAdminUser || !isLucrumRoute">
+      <mat-form-field class="full-width">
+        <input
+        type="password"
+        matInput
+        name="did_password"
+        [formControl]="itemForm.controls['password']"
+        placeholder="Password">
+      </mat-form-field>
+    </div>
+    <div fxFlex="50"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+        type="number"
+        matInput
+        name="didcost"
+        [formControl]="itemForm.controls['didCost']"
+        placeholder="DID Cost">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="50"  class="pr-1" *ngIf="isAdminUser || !isLucrumRoute">
+      <mat-form-field class="full-width">
+        <input
+        type="number"
+        matInput
+        name="mtSmsCost"
+        [formControl]="itemForm.controls['mtSmsCost']"
+        placeholder="MT SMS Cost">
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100"  class="pr-1 pt-1">
+      <div class="full-width">
+        <div fxFlex="50"  class="pr-1" *ngIf="isAdminUser">
+          <mat-checkbox
+              name="isLucrumRoute"
+              [formControl]="itemForm.controls['isLucrumRoute']"
+          >
+            Is Lucrum Route
+          </mat-checkbox>
+        </div>
+        <div fxFlex="50"  class="pr-1">
+          <mat-checkbox
+              name="linkAllowed"
+              [formControl]="itemForm.controls['linkAllowed']"
+          >
+            Link Allowed
+          </mat-checkbox>
+        </div>
+      </div>
+    </div>
+
+    <div fxFlex="100" class="mt-1">
+      <button mat-raised-button color="primary" [disabled]="itemForm.invalid">{{"SAVE" | translate }}</button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,145 @@
+<mat-card class="margin-333">
+    <form [formGroup]="numberLookupForm" (ngSubmit)="submit()">
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+            <mat-form-field>
+                <input
+                matInput
+                name="number"
+                [formControl]="numberLookupForm.controls['number']"
+                placeholder="Phone Number">
+            </mat-form-field>
+            <div>
+                <button mat-raised-button color="primary" [disabled]="numberLookupForm.invalid">{{"SEARCH" | translate }}</button>
+            </div>
+        </div>
+    </form>
+</mat-card>
+
+<mat-card class="margin-333" *ngIf="numberInfo">
+    <mat-card-title class="mb-1 light-gray">
+        <h1 class="text-center">Number Info</h1>
+    </mat-card-title>
+    <div fxLayout="row wrap" fxLayout.lt-sm="column" class="pt-1">
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> CarrierName</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="carrierName"
+                    value={{numberInfo.carrierName}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> IsMobileCarrier</mat-label>
+                <input
+                    matInput
+                    type="text" disabled style="display: none"/>
+                <mat-chip class="status" color={{getBoolColor(numberInfo.isMobileCarrier)}} [selected]="numberInfo.isMobileCarrier != null" >{{getBoolLabel(numberInfo.isMobileCarrier)}}</mat-chip>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> IsBlackListed</mat-label>
+                <input
+                    matInput
+                    type="text" disabled style="display: none"/>
+                <mat-chip class="status" color={{getBoolColor(numberInfo.isBlackListed)}} [selected]="numberInfo.isBlackListed != null" >{{getBoolLabel(numberInfo.isBlackListed)}}</mat-chip>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> BlackListedType</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="blackListedType"
+                    value={{numberInfo.blackListedType}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> Country</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="country"
+                    value={{numberInfo.country}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> IsNumberValid</mat-label>
+                <input
+                    matInput
+                    type="text" disabled style="display: none"/>
+                <mat-chip class="status" color={{getBoolColor(numberInfo.isNumberValid)}} [selected]="numberInfo.isNumberValid != null" >{{getBoolLabel(numberInfo.isNumberValid)}}</mat-chip>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> ResponseTime</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="responseTime"
+                    value={{numberInfo.responseTime}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> Npa</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="npa"
+                    value={{numberInfo.npa}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> Nxx</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="nxx"
+                    value={{numberInfo.nxx}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> IsSuccess</mat-label>
+                <input
+                    matInput
+                    type="text" disabled style="display: none"/>
+                <mat-chip class="status" color={{getBoolColor(numberInfo.isSuccess)}} [selected]="numberInfo.isSuccess != null" >{{getBoolLabel(numberInfo.isSuccess)}}</mat-chip>
+            </mat-form-field>
+        </div>
+        <div fxFlex="50" class="pr-1">
+            <mat-form-field class="full-width" floatLabel="always">
+                <mat-label> Status</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    name="status"
+                    value={{numberInfo.status}}
+                    disabled
+                />
+            </mat-form-field>
+        </div>
+        
+    </div>
+</mat-card>

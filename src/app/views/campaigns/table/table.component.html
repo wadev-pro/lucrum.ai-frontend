@@ -1,0 +1,194 @@
+<table class="w-100" mat-table *ngIf="campaigns" [dataSource]="campaigns" matSort (matSortChange)="sortData($event)">
+    <ng-container matColumnDef="srNo" sticky>
+        <mat-header-cell class="cell-srno" *matHeaderCellDef
+            >Sr #</mat-header-cell
+        >
+        <mat-cell class="cell-srno" *matCellDef="let item">
+            <a [href]="item.campaign_id" target="_blank">
+                {{ item.no }}
+            </a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name" sticky>
+        <mat-header-cell class="cell-name" *matHeaderCellDef mat-sort-header
+            >Name</mat-header-cell
+        >
+        <mat-cell class="cell-name" *matCellDef="let item">
+            {{ item.name | excerpt: 80 }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="processingStatus">
+        <mat-header-cell class="cell-processing-status" *matHeaderCellDef mat-sort-header
+            >Processing<br/>Status</mat-header-cell
+        >
+        <mat-cell class="cell-processing-status" *matCellDef="let item">
+            <mat-chip mat-sm-chip [color]="getProcessingStatusColor(item.processing_status)" [selected]="true" >{{getProcessingStatus(item.processing_status)}}</mat-chip>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="messagesSent">
+        <mat-header-cell class="cell-message-sent cell-metric" *matHeaderCellDef
+            >Messages Sent</mat-header-cell
+        >
+        <mat-cell class="cell-message-sent cell-metric" *matCellDef="let item">
+            {{ item.sentcount | number }}
+        </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="mobileClicks">
+        <mat-header-cell class="cell-mobile-click cell-metric" *matHeaderCellDef
+            >Mobile Clicks</mat-header-cell
+        >
+        <mat-cell class="cell-mobile-click cell-metric" *matCellDef="let item">
+            {{ item.mobileclickscount | number }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="otherClicks">
+        <mat-header-cell class="cell-other-click cell-metric" *matHeaderCellDef
+            >Other Clicks</mat-header-cell
+        >
+        <mat-cell class="cell-other-click cell-metric" *matCellDef="let item">
+            {{ item.otherclickscount | number }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="conversionCount">
+        <mat-header-cell class="cell-conversions cell-metric" *matHeaderCellDef
+            >Conversions</mat-header-cell
+        >
+        <mat-cell class="cell-conversions cell-metric" *matCellDef="let item">
+            {{ item.conversioncount | number }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+        <mat-header-cell class="cell-cost cell-metric" *matHeaderCellDef
+            >Cost</mat-header-cell
+        >
+        <mat-cell class="cell-cost cell-metric" *matCellDef="let item">
+            {{ item.cost | currency: 'USD' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="revenue">
+        <mat-header-cell class="cell-revenue cell-metric" *matHeaderCellDef
+            >Revenue</mat-header-cell
+        >
+        <mat-cell class="cell-revenue cell-metric" *matCellDef="let item">
+            {{ item.revenue | currency: 'USD' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="profit">
+        <mat-header-cell class="cell-profit cell-metric" *matHeaderCellDef
+            >Profit</mat-header-cell
+        >
+        <mat-cell class="cell-profit cell-metric" *matCellDef="let item" >
+            <span [innerHTML]="item.profit | customCurrency"></span>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="roi">
+        <mat-header-cell class="cell-roi cell-metric" *matHeaderCellDef
+            >ROI</mat-header-cell
+        >
+        <mat-cell class="cell-roi cell-metric" *matCellDef="let item">
+            <span [innerHTML]="item.roi | customPercent"></span>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="ctr">
+        <mat-header-cell class="cell-ctr cell-metric" *matHeaderCellDef
+            >CTR</mat-header-cell
+        >
+        <mat-cell class="cell-ctr cell-metric" *matCellDef="let item">
+            {{ item.ctr | percent: '0.0-3'}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="optRate">
+        <mat-header-cell class="cell-optRate cell-metric" *matHeaderCellDef
+            >Opt Rate</mat-header-cell
+        >
+        <mat-cell class="cell-optRate cell-metric" *matCellDef="let item">
+            {{ item.opt_rate | percent: '0.0-3'}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="complainerRate">
+        <mat-header-cell class="cell-complainerRate cell-metric" *matHeaderCellDef
+            >Complainer<br/>Rate</mat-header-cell
+        >
+        <mat-cell class="cell-complainerRate cell-metric" *matCellDef="let item">
+            {{ item.complainer_rate | percent: '0.0-3'}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="replyRate">
+        <mat-header-cell class="cell-replyRate cell-metric" *matHeaderCellDef
+            >Reply<br/>Rate</mat-header-cell
+        >
+        <mat-cell class="cell-replyRate cell-metric" *matCellDef="let item">
+            {{ item.reply_rate | percent: '0.0-3'}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created">
+        <mat-header-cell class="cell-created" *matHeaderCellDef mat-sort-header
+            >Created</mat-header-cell
+        >
+        <mat-cell class="cell-created" *matCellDef="let item">
+            {{ item.created_at | momentDate:'YYYY-MM-DD hh:mm A' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions" stickyEnd>
+        <mat-header-cell class="cell-action" *matHeaderCellDef
+            >Actions</mat-header-cell
+        >
+        <mat-cell class="cell-action" *matCellDef="let item">
+            <button mat-icon-button [matMenuTriggerFor]="chartMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #chartMenu="matMenu">
+                <button *ngIf="getButtonStatus(item.processing_status).show_detail" mat-menu-item routerLink="/campaigns/{{item.campaign_id}}">
+                    <mat-icon>details</mat-icon>
+                    <span>Detail</span>
+                </button>
+                <button *ngIf="getButtonStatus(item.processing_status).show_edit" mat-menu-item routerLink="/campaigns/{{item.campaign_id}}/edit">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                </button>
+                <button *ngIf="getButtonStatus(item.processing_status).show_start" mat-menu-item (click)="runCampaign(item)">
+                    <mat-icon>play_arrow</mat-icon>
+                    <span>Run</span>
+                </button>
+                <button *ngIf="getButtonStatus(item.processing_status).show_stop" mat-menu-item (click)="stopCampaign(item)">
+                    <mat-icon>stop</mat-icon>
+                    <span>Stop</span>
+                </button>
+                <button *ngIf="getButtonStatus(item.processing_status).show_testing" mat-menu-item (click)="testCampaign(item)">
+                    <mat-icon>directions_run</mat-icon>
+                    <span>Run Testing</span>
+                </button >
+                <button mat-menu-item routerLink="/campaigns/{{item.campaign_id}}/clone">
+                    <mat-icon>content_copy</mat-icon>
+                    <span>Clone</span>
+                </button>
+                <button mat-menu-item (click)="deleteCampaignJob(item)">
+                    <mat-icon>eject</mat-icon>
+                    <span>Delete Job</span>
+                </button>
+            </mat-menu>
+
+        </mat-cell>
+    </ng-container>
+    <mat-header-row
+        *matHeaderRowDef="columnHeaders; sticky: true"
+    ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+</table>

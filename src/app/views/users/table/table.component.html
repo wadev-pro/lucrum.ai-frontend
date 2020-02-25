@@ -1,0 +1,105 @@
+<table class="w-100" mat-table *ngIf="users" [dataSource]="users" matSort (matSortChange)="sortData($event)">
+    <ng-container matColumnDef="srNo" sticky>
+        <mat-header-cell class="cell-srno" *matHeaderCellDef
+            >Sr #</mat-header-cell
+        >
+        <mat-cell class="cell-srno" *matCellDef="let item; let i = index;">
+            <a href="javascript:;">
+                {{ offset + i + 1 }}
+            </a>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell class="cell-name cell-metric" *matHeaderCellDef mat-sort-header
+            >User Name</mat-header-cell
+        >
+        <mat-cell class="cell-name cell-metric" *matCellDef="let item">
+            {{ item.name}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="first_name">
+        <mat-header-cell class="cell-first_name cell-metric" *matHeaderCellDef mat-sort-header
+            >First Name</mat-header-cell
+        >
+        <mat-cell class="cell-first_name cell-metric" *matCellDef="let item">
+            {{ item.first_name}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="last_name">
+        <mat-header-cell class="cell-last_name cell-metric" *matHeaderCellDef mat-sort-header
+            >Last Name</mat-header-cell
+        >
+        <mat-cell class="cell-last_name cell-metric" *matCellDef="let item">
+            {{ item.last_name}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <mat-header-cell class="cell-email cell-metric" *matHeaderCellDef mat-sort-header
+            >Email</mat-header-cell
+        >
+        <mat-cell class="cell-email cell-metric" *matCellDef="let item">
+            {{ item.email}}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+        <mat-header-cell class="cell-role cell-metric" *matHeaderCellDef mat-sort-header
+            >Role</mat-header-cell
+        >
+        <mat-cell class="cell-role cell-metric" *matCellDef="let item">
+            <mat-chip mat-sm-chip [color]="getRoleColor(item.role)" [selected]="true">{{ getRoleName(item.role) }}</mat-chip>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created_at">
+        <mat-header-cell class="cell-created_at cell-metric" *matHeaderCellDef mat-sort-header
+            >Created At</mat-header-cell
+        >
+        <mat-cell class="cell-created_at cell-metric" *matCellDef="let item">
+            {{ item.created_at | date:'y-MM-dd hh:mm a' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sentAvgSms">
+        <mat-header-cell class="cell-updated_at cell-metric" style="padding: 0px 5px" *matHeaderCellDef>
+            <div>Last 7 days avg.</div>
+            <div>SMS sent</div>
+        </mat-header-cell>
+        <mat-cell class="cell-updated_at cell-metric" *matCellDef="let item">
+            <div class="full-width" style="text-align: center">{{ item.sentAvgSms}}</div>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="balance">
+        <mat-header-cell class="cell-updated_at cell-metric" *matHeaderCellDef> Available Funds </mat-header-cell>
+        <mat-cell class="cell-updated_at cell-metric"  *matCellDef="let item">
+            <div *ngIf="isNumber(item.balance); else loading">
+                {{ item.balance | currency: 'USD' }}
+            </div>
+          <ng-template #loading>
+            <mat-spinner [diameter]="20"></mat-spinner>
+          </ng-template>
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+        <mat-header-cell class="cell-actions" *matHeaderCellDef
+            >Actions</mat-header-cell
+        >
+        <mat-cell class="cell-actions" *matCellDef="let item">
+            <button mat-icon-button (click)="onEdit(item)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button *ngIf="item.role !== 1" (click)="onDelete(item)"><mat-icon>delete</mat-icon></button>
+            <button mat-icon-button [matTooltip]="('Emulate ' + item.email)" (click)="emulateUser(item)" ><mat-icon>account_box</mat-icon></button>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row
+        *matHeaderRowDef="columnHeaders; sticky: true"
+    ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnHeaders"></mat-row>
+</table>
+<div class="text-center margin-333" *ngIf="(didFetch$ | async) && users.length === 0">No Records Found!</div>

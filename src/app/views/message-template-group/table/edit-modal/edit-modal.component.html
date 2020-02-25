@@ -1,0 +1,39 @@
+<h1 matDialogTitle>{{data.title}}</h1>
+  <form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="100"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+        matInput
+        name="name"
+        [formControl]="itemForm.controls['name']"
+        placeholder="Group Name">
+
+      </mat-form-field>
+    </div>
+    <div fxFlex="100"  class="pr-1 pt-1">
+      <div class="full-width">
+        <mat-checkbox
+            name="isReplyBackGroup"
+            [formControl]="itemForm.controls['isReplyBackGroup']"
+        >
+          Is Reply Back Group
+        </mat-checkbox>
+      </div>
+    </div>
+    <div fxFlex="100"  class="pr-1 pt-1" *ngIf="data.type === 'edit'">
+      <div class="full-width">
+        <mat-label class="pr-1">Active</mat-label>
+        <mat-slide-toggle
+          [checked]="isActive ? true : false"
+          (change)="isActive = !isActive">
+        </mat-slide-toggle>
+      </div>
+    </div>
+    <div fxFlex="100" class="mt-1">
+      <button mat-raised-button color="primary" [disabled]="itemForm.invalid">{{"SAVE" | translate }}</button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </div>
+  </div>
+  </form>

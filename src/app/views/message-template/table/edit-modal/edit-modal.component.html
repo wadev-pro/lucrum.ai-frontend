@@ -1,0 +1,76 @@
+<h1 matDialogTitle>{{data.title}}</h1>
+  <form [formGroup]="itemForm" (ngSubmit)="submit()">
+  <div fxLayout="row wrap" fxLayout.lt-sm="column">
+    <div fxFlex="100"  class="pr-1">
+      <mat-form-field class="full-width">
+        <input
+        matInput
+        name="name"
+        [formControl]="itemForm.controls['name']"
+        placeholder="Template Name">
+
+      </mat-form-field>
+    </div>
+    <div fxFlex="100"  class="pr-1">
+      <mat-form-field class="full-width">
+        <mat-select [formControl]="itemForm.controls['templateGroup']" placeholder="Template Group" #singleSelect>
+          <ngx-mat-select-search *ngIf="true" [placeholderLabel]="'Search...'" [noEntriesFoundLabel]="'No matches' "  [formControl]="groupFilterCtrl" [preventHomeEndKeyPropagation]="true">
+            <mat-icon ngxMatSelectSearchClear>delete</mat-icon>
+          </ngx-mat-select-search>
+          <mat-option *ngFor="let item of filteredTemplateGroups" [value]="item">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="100"  class="pr-1">
+      <mat-form-field floatLabel="always" class="full-width">
+        <mat-label>Available Tags</mat-label>
+        <input
+            matInput
+            type="text"
+            name="availabelTags"
+            value=""
+            disabled
+        />
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip color="primary" *ngFor="let item of availableTags" (click)="addTag(item)">{{ item.value }}</mat-chip>
+        </mat-chip-list>
+      </mat-form-field>
+    </div>
+    
+    <div fxFlex="100"  class="pr-1">
+      <mat-form-field floatLabel="always" class="full-width">
+        <mat-label> Template</mat-label>
+        <textarea matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        [formControl]="itemForm.controls['template']"
+        cdkAutosizeMinRows="5"
+        cdkAutosizeMaxRows="10"
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="100"  class="pr-1">
+      <button class="mb-1" [disabled]="!itemForm.value.template" mat-raised-button color="primary" (click)="previewTemplate()">{{"Preview" | translate }}</button>
+    </div>  
+
+    <div fxFlex="100"  class="pr-1" *ngIf="data.type === 'edit'">
+      <div class="full-width">
+        <mat-label class="pr-1">Active</mat-label>
+        <mat-slide-toggle
+          [checked]="isActive ? true : false"
+          (change)="isActive = !isActive">
+        </mat-slide-toggle>
+      </div>
+    </div>
+
+    <div fxFlex="100" class="mt-1">
+      <button mat-raised-button color="primary" [disabled]="itemForm.invalid">{{"SAVE" | translate }}</button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Cancel</button>
+    </div>
+    
+  </div>
+  </form>

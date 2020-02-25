@@ -1,0 +1,111 @@
+<div class="detail-information-wrapper">
+    <mat-card>
+        <mat-card-title class="">
+            <div class="card-title-text">Message Template Details</div>
+            <mat-divider></mat-divider>
+        </mat-card-title>
+        <mat-card-content class="mt-1" *ngIf="isReady">
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Name</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="name"
+                            [value]="messageTemplate.name"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex></div>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always" class="full-width">
+                        <mat-label>Template</mat-label>
+                        <textarea matInput
+                        cdkTextareaAutosize
+                        #autosize="cdkTextareaAutosize"
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"
+                        disabled
+                        >{{ messageTemplate.template | removeLinebreak }}</textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <button class="mb-1" mat-raised-button color="primary" (click)="previewTemplate()">{{"Preview" | translate }}</button>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label> Created By</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="createdBy"
+                            [value]="messageTemplate.createdBy"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label> Created At</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="createdAt"
+                            [value]="messageTemplate.createdAt | date:'y-MM-dd hh:mm a'"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label> Updated By</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="updatedBy"
+                            [value]="messageTemplate.lastUpdateBy"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label> Updated At</mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            name="updatedAt"
+                            [value]="messageTemplate.lastUpdateAt | date:'y-MM-dd hh:mm a'"
+                            disabled
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayout.lt-sm="column" >
+                <div fxFlex>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Active</mat-label>
+                        <input
+                            matInput
+                            type="text" disabled style="display: none"/>
+                        <mat-slide-toggle
+                            [checked]="!messageTemplate.isRemoved">
+                        </mat-slide-toggle>
+                    </mat-form-field>
+                </div>
+                <div fxFlex></div>
+            </div>
+            <div class="m-333 text-right">
+                <button mat-raised-button class="mr-05" color="accent" routerLink="../">{{"BACK" | translate }}</button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
