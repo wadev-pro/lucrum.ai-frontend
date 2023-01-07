@@ -108,7 +108,7 @@
     "@types/jasminewd2": "2.0.6",
     "@types/node": "^11.10.4",
     "codelyzer": "^4.5.0",
-    "copy-webpack-plugin": "4.3.0",
+    "copy-webpack-plugin": "4.6.0",
     "enhanced-resolve": "3.3.0",
     "gulp": "4.0.0",
     "gulp-gzip": "1.4.2",
