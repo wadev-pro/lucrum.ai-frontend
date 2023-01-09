@@ -69,7 +69,7 @@
     "highlight.js": "9.15.6",
     "hopscotch": "0.3.1",
     "install": "0.12.2",
-    "luxon": "^1.17.1",
+    "luxon": "^1.28.1",
     "moment": "2.24.0",
     "moment-timezone": "^0.5.25",
     "ng2-charts": "2.2.2",
